@@ -20,5 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "DemoTaskApp"
-include(":app")
+include(":roomCompose")
  
