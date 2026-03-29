@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "DemoTaskApp"
 include(":roomCompose")
- 
+include(":firebasecompose")

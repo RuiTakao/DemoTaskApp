@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.takaobrog.roomcompose"
+    namespace = "com.takaobrog.firebasecompose"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.takaobrog.roomcompose"
+        applicationId = "com.takaobrog.firebasecompose"
         minSdk = 35
         targetSdk = 36
         versionCode = 1
