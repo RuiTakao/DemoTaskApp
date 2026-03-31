@@ -1,4 +1,4 @@
-package com.takaobrog.demotaskapp.ui.theme
+package com.takaobrog.roomcompose.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

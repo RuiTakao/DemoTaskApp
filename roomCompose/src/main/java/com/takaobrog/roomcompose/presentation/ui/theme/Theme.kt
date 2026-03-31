@@ -1,6 +1,5 @@
-package com.takaobrog.demotaskapp.ui.theme
+package com.takaobrog.roomcompose.presentation.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
