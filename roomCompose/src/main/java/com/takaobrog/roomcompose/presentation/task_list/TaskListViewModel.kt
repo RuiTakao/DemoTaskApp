@@ -1,4 +1,4 @@
-package com.takaobrog.roomcompose.presentation
+package com.takaobrog.roomcompose.presentation.task_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class TaskListViewModel @Inject constructor(
     getTaskListUseCase: GetTaskListUseCase,
     private val createUseCase: CreateTaskUseCase
 ) : ViewModel() {
