@@ -20,17 +20,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.takaobrog.roomcompose.domain.model.GetTaskResponse
 import com.takaobrog.roomcompose.presentation.component.FAButton
+import com.takaobrog.roomcompose.presentation.task_list.ui_model.TaskListEvent
 
 @Composable
 fun TaskListScreen(
     list: List<GetTaskResponse>,
-    onClick: () -> Unit,
+    onEvent: (TaskListEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
-            FAButton(onClick = onClick)
+            FAButton(onClick = { onEvent(TaskListEvent.OnFabEvent) })
         },
         contentWindowInsets = WindowInsets.systemBars,
     ) { padding ->
@@ -65,5 +66,5 @@ fun TaskListScreen(
 @Preview
 @Composable
 fun TaskListScreenPreview(modifier: Modifier = Modifier) {
-    TaskListScreen(list = emptyList(), onClick = {}, modifier = modifier)
+    TaskListScreen(list = emptyList(), onEvent = {}, modifier = modifier)
 }
