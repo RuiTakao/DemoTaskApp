@@ -19,8 +19,9 @@ class TaskRepositoryImpl @Inject constructor(
             .map { list ->
                 list.map {
                     GetTaskResponse(
-                        name = it.name,
-                        detail = it.detail ?: ""
+                        title = it.title,
+                        progressPercent = it.progressPercent,
+                        targetDate = it.targetDate
                     )
                 }
             }
@@ -28,8 +29,9 @@ class TaskRepositoryImpl @Inject constructor(
 
     override suspend fun create(request: CreateTaskRequest): Result<Unit> = runCatching {
         val task = Task(
-            name = request.name,
-            detail = request.detail,
+            title = request.title,
+            progressPercent = request.progressPercent,
+            targetDate = request.targetDate,
         )
         taskDao.insert(task)
     }

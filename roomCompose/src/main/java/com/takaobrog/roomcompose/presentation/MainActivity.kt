@@ -35,10 +35,10 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(route = ScreenRoute.TaskList.route) {
                         val viewModel: TaskListViewModel = hiltViewModel()
-                        val list by viewModel.taskList.collectAsState(initial = emptyList())
+                        val state by viewModel.uiState.collectAsState()
 
                         TaskListScreen(
-                            list = list,
+                            state = state,
                             onEvent = { event ->
                                 when (event) {
                                     TaskListEvent.OnFabEvent ->
@@ -63,7 +63,11 @@ class MainActivity : ComponentActivity() {
                             onEvent = { event ->
                                 when (event) {
                                     is TaskCreateEvent.OnSubmit ->
-                                        viewModel.submit(name = event.name, detail = event.detail)
+                                        viewModel.submit(
+                                            name = event.name,
+                                            progressPercent = event.progressPercent,
+                                            targetDate = event.targetDate,
+                                        )
 
                                     TaskCreateEvent.OnBackEvent -> navController.popBackStack()
                                 }

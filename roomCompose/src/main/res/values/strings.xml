@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">DemoTaskApp</string>
     <string name="fab_icon_description">タスク追加</string>
+    <string name="task_list_item_progress_percent_label">進捗:</string>
+    <string name="task_list_item_target_date_label">期限: %1$s</string>
+    <string name="task_list_item_target_date_empty">期限: 未定</string>
 </resources>

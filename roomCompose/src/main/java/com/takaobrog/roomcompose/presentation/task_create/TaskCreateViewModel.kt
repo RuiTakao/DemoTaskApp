@@ -17,9 +17,9 @@ class TaskCreateViewModel @Inject constructor(
     private val _effect = MutableSharedFlow<TaskCreateEffect>()
     val effect = _effect.asSharedFlow()
 
-    fun submit(name: String, detail: String) {
+    fun submit(name: String, progressPercent: Float, targetDate: String?) {
         viewModelScope.launch {
-            createUseCase(name = name, detail = detail)
+            createUseCase(name = name, progressPercent = progressPercent, targetDate = targetDate)
             _effect.emit(TaskCreateEffect.NavigateBack)
         }
     }
