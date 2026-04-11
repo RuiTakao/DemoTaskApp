@@ -11,6 +11,9 @@ interface TaskDao {
     @Query("SELECT * FROM task")
     fun getAll(): Flow<List<Task>>
 
+    @Query("SELECT * FROM task WHERE uid =:uid")
+    fun getTask(uid: Int): Flow<Task>
+
     @Insert
     suspend fun insert(vararg task: Task)
 }
