@@ -34,10 +34,10 @@ class TaskRepositoryImpl @Inject constructor(
             .distinctUntilChanged()
             .map {
                 GetTaskResponse(
-                    uid = it.uid,
-                    title = it.title,
-                    progressPercent = it.progressPercent,
-                    targetDate = it.targetDate,
+                    uid = it?.uid ?: 0,
+                    title = it?.title ?: "",
+                    progressPercent = it?.progressPercent ?: 0f,
+                    targetDate = it?.targetDate,
                 )
             }
     }
@@ -49,5 +49,9 @@ class TaskRepositoryImpl @Inject constructor(
             targetDate = request.targetDate,
         )
         taskDao.insert(task)
+    }
+
+    override suspend fun delete(uid: Int): Result<Unit> = runCatching {
+        taskDao.delete(uid = uid)
     }
 }

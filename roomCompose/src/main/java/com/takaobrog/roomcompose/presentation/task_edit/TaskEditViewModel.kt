@@ -1,6 +1,5 @@
 package com.takaobrog.roomcompose.presentation.task_edit
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    repository: TaskRepository,
+    private val repository: TaskRepository,
 ) : ViewModel() {
     val uid: Int = savedStateHandle["uid"] ?: 0
 
@@ -39,7 +38,7 @@ class TaskEditViewModel @Inject constructor(
 
     fun delete() {
         viewModelScope.launch {
-            Log.d("TaskEditViewModel", "uid $uid")
+            repository.delete(uid = uid)
             _effect.emit(TaskEditEffect.NavigateBack)
         }
     }
