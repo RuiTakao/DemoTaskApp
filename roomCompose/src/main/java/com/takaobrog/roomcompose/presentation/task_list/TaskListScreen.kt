@@ -44,7 +44,7 @@ fun TaskListScreen(
 
                 is TaskListUiState.Success -> {
                     val list = state.list
-                    ListView(list = list)
+                    ListView(list = list, onEvent = onEvent)
                 }
 
                 is TaskListUiState.Error -> {
@@ -56,13 +56,19 @@ fun TaskListScreen(
 }
 
 @Composable
-fun ListView(list: List<TaskListUiModel>) {
+fun ListView(list: List<TaskListUiModel>, onEvent: (TaskListEvent) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(space = 16.dp),
     ) {
         items(list) { item ->
-            TaskListItem(title = item.title, progressPercent = item.progressPercent, targetDate = item.targetDate, isTargetDateOver = item.isTargetDateOver)
+            TaskListItem(
+                title = item.title,
+                progressPercent = item.progressPercent,
+                targetDate = item.targetDate,
+                isTargetDateOver = item.isTargetDateOver,
+                onItemClick = { onEvent(TaskListEvent.OnClickTaskListItemEvent(uid = item.uid)) },
+            )
         }
     }
 }
@@ -72,18 +78,21 @@ fun ListView(list: List<TaskListUiModel>) {
 fun TaskListScreenPreview(modifier: Modifier = Modifier) {
     val list = listOf<TaskListUiModel>(
         TaskListUiModel(
+            uid = 1,
             title = "Room学習",
             progressPercent = .7f,
             targetDate = null,
             isTargetDateOver = false,
         ),
         TaskListUiModel(
+            uid = 2,
             title = "Firebase学習",
             progressPercent = .7f,
             targetDate = null,
             isTargetDateOver = false,
         ),
         TaskListUiModel(
+            uid = 3,
             title = "Api学習",
             progressPercent = .7f,
             targetDate = null,

@@ -18,6 +18,7 @@ class GetTaskListUseCase @Inject constructor(
                         item.targetDate?.let { if (it.isNotEmpty()) LocalDate.parse(it) else null }
                     val isTargetDateOver = targetDate?.isBefore(LocalDate.now())
                     TaskListUiModel(
+                        uid = item.uid,
                         title = item.title,
                         progressPercent = item.progressPercent,
                         targetDate = item.targetDate,

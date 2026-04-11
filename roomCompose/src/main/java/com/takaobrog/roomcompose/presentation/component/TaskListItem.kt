@@ -2,6 +2,7 @@ package com.takaobrog.roomcompose.presentation.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,9 +29,12 @@ fun TaskListItem(
     progressPercent: Float,
     targetDate: String?,
     isTargetDateOver: Boolean,
+    onItemClick: () -> Unit,
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onItemClick() },
         shape = RoundedCornerShape(size = 16.dp),
         border = BorderStroke(width = 1.dp, color = Color.Black),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -80,7 +84,9 @@ private fun ProgressPercentView(progressPercent: Float) {
         )
         LinearProgressIndicator(
             progress = { progressPercent },
-            modifier = Modifier.height(height = 16.dp).padding(start = 4.dp),
+            modifier = Modifier
+                .height(height = 16.dp)
+                .padding(start = 4.dp),
             color = Color.Green,
             trackColor = Color.Black,
         )
@@ -98,9 +104,33 @@ fun TaskListItemPreview() {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        TaskListItem(title = "Room学習", progressPercent = .3f, targetDate = "4/5 12:00", isTargetDateOver = false)
-        TaskListItem(title = "Firebase学習", progressPercent = .7f, targetDate = "4/1 9:00", isTargetDateOver = true)
-        TaskListItem(title = "Firebase学習", progressPercent = 1f, targetDate = "4/1 9:00", isTargetDateOver = true)
-        TaskListItem(title = "Api学習", progressPercent = .0f, targetDate = null, isTargetDateOver = false)
+        TaskListItem(
+            title = "Room学習",
+            progressPercent = .3f,
+            targetDate = "4/5 12:00",
+            isTargetDateOver = false,
+            onItemClick = {},
+        )
+        TaskListItem(
+            title = "Firebase学習",
+            progressPercent = .7f,
+            targetDate = "4/1 9:00",
+            isTargetDateOver = true,
+            onItemClick = {},
+        )
+        TaskListItem(
+            title = "Firebase学習",
+            progressPercent = 1f,
+            targetDate = "4/1 9:00",
+            isTargetDateOver = true,
+            onItemClick = {},
+        )
+        TaskListItem(
+            title = "Api学習",
+            progressPercent = .0f,
+            targetDate = null,
+            isTargetDateOver = false,
+            onItemClick = {},
+        )
     }
 }
