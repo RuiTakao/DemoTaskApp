@@ -4,40 +4,75 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.takaobrog.roomcompose.presentation.task_list.TaskListScreen
+import com.takaobrog.roomcompose.presentation.task_list.TaskListViewModel
+import com.takaobrog.roomcompose.presentation.task_create.TaskCreateScreen
+import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEffect
+import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEvent
+import com.takaobrog.roomcompose.presentation.task_create.TaskCreateViewModel
+import com.takaobrog.roomcompose.presentation.task_list.ui_model.TaskListEvent
 import com.takaobrog.roomcompose.presentation.ui.theme.DemoTaskAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             DemoTaskAppTheme {
-                val taskList by viewModel.taskList.collectAsState(initial = emptyList())
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(modifier = Modifier.padding(innerPadding)) {
-                        LazyColumn {
-                            items(taskList) {
-                                Text(text = it.name ?: "")
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = ScreenRoute.TaskList.route
+                ) {
+                    composable(route = ScreenRoute.TaskList.route) {
+                        val viewModel: TaskListViewModel = hiltViewModel()
+                        val state by viewModel.uiState.collectAsState()
+
+                        TaskListScreen(
+                            state = state,
+                            onEvent = { event ->
+                                when (event) {
+                                    TaskListEvent.OnFabEvent ->
+                                        navController.navigate(ScreenRoute.TaskCreate.route)
+                                }
+                            }
+                        )
+                    }
+
+                    composable(route = ScreenRoute.TaskCreate.route) {
+                        val viewModel: TaskCreateViewModel = hiltViewModel()
+
+                        LaunchedEffect(Unit) {
+                            viewModel.effect.collect { effect ->
+                                when (effect) {
+                                    TaskCreateEffect.NavigateBack -> navController.popBackStack()
+                                }
                             }
                         }
 
-                        EditField(onClick = viewModel::insert)
+                        TaskCreateScreen(
+                            onEvent = { event ->
+                                when (event) {
+                                    is TaskCreateEvent.OnSubmit ->
+                                        viewModel.submit(
+                                            name = event.name,
+                                            progressPercent = event.progressPercent,
+                                            targetDate = event.targetDate,
+                                        )
+
+                                    TaskCreateEvent.OnBackEvent -> navController.popBackStack()
+                                }
+                            }
+                        )
                     }
                 }
             }

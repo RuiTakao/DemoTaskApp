@@ -7,10 +7,11 @@ import javax.inject.Inject
 class CreateTaskUseCase @Inject constructor(
     private val repository: TaskRepository
 ) {
-    suspend operator fun invoke(name: String, detail: String) {
+    suspend operator fun invoke(name: String, progressPercent: Float, targetDate: String?) {
         val request = CreateTaskRequest(
-            name = name,
-            detail = detail,
+            title = name,
+            progressPercent = progressPercent,
+            targetDate = targetDate
         )
         repository.create(request)
     }
