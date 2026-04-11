@@ -20,6 +20,9 @@ import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEff
 import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEvent
 import com.takaobrog.roomcompose.presentation.task_create.TaskCreateViewModel
 import com.takaobrog.roomcompose.presentation.task_edit.TaskEditScreen
+import com.takaobrog.roomcompose.presentation.task_edit.TaskEditViewModel
+import com.takaobrog.roomcompose.presentation.task_edit.ui_model.TaskEditEffect
+import com.takaobrog.roomcompose.presentation.task_edit.ui_model.TaskEditEvent
 import com.takaobrog.roomcompose.presentation.task_list.ui_model.TaskListEvent
 import com.takaobrog.roomcompose.presentation.ui.theme.DemoTaskAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,7 +90,25 @@ class MainActivity : ComponentActivity() {
                         route = ScreenRoute.TaskEdit.route + "/{uid}",
                         arguments = listOf(navArgument("uid") { type = NavType.IntType })
                     ) {
-                        TaskEditScreen()
+                        val viewModel: TaskEditViewModel = hiltViewModel()
+                        val state by viewModel.uiState.collectAsState()
+
+                        LaunchedEffect(Unit) {
+                            viewModel.effect.collect { effect ->
+                                when (effect) {
+                                    TaskEditEffect.NavigateBack -> navController.popBackStack()
+                                }
+                            }
+                        }
+
+                        TaskEditScreen(
+                            state = state,
+                            onEvent = { event ->
+                                when (event) {
+                                    is TaskEditEvent.OnDeleteTaskEvent -> viewModel.delete()
+                                }
+                            }
+                        )
                     }
                 }
             }
