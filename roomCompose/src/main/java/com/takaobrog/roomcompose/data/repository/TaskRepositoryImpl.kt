@@ -1,6 +1,5 @@
 package com.takaobrog.roomcompose.data.repository
 
-import android.util.Log
 import com.takaobrog.roomcompose.data.dao.TaskDao
 import com.takaobrog.roomcompose.data.model.Task
 import com.takaobrog.roomcompose.domain.model.CreateTaskRequest
@@ -35,7 +34,6 @@ class TaskRepositoryImpl @Inject constructor(
     override suspend fun getTask(uid: Int): Result<GetTaskResponse?> =
         withContext(Dispatchers.IO) {
             runCatching {
-                Log.d("TaskRepositoryImpl", "taskDao ${taskDao.getTask(uid = uid)?.title}")
                 taskDao.getTask(uid = uid)?.let {
                     GetTaskResponse(
                         uid = it.uid,
