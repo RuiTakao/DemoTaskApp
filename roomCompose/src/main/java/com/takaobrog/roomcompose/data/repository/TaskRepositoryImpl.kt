@@ -1,14 +1,17 @@
 package com.takaobrog.roomcompose.data.repository
 
+import android.util.Log
 import com.takaobrog.roomcompose.data.dao.TaskDao
 import com.takaobrog.roomcompose.data.model.Task
 import com.takaobrog.roomcompose.domain.model.CreateTaskRequest
 import com.takaobrog.roomcompose.domain.model.GetTaskListResponse
 import com.takaobrog.roomcompose.domain.model.GetTaskResponse
 import com.takaobrog.roomcompose.domain.repository.TaskRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class TaskRepositoryImpl @Inject constructor(
@@ -29,18 +32,20 @@ class TaskRepositoryImpl @Inject constructor(
             }
     }
 
-    override fun getTask(uid: Int): Flow<GetTaskResponse> {
-        return taskDao.getTask(uid = uid)
-            .distinctUntilChanged()
-            .map {
-                GetTaskResponse(
-                    uid = it?.uid ?: 0,
-                    title = it?.title ?: "",
-                    progressPercent = it?.progressPercent ?: 0f,
-                    targetDate = it?.targetDate,
-                )
+    override suspend fun getTask(uid: Int): Result<GetTaskResponse?> =
+        withContext(Dispatchers.IO) {
+            runCatching {
+                Log.d("TaskRepositoryImpl", "taskDao ${taskDao.getTask(uid = uid)?.title}")
+                taskDao.getTask(uid = uid)?.let {
+                    GetTaskResponse(
+                        uid = it.uid,
+                        title = it.title,
+                        progressPercent = it.progressPercent,
+                        targetDate = it.targetDate,
+                    )
+                }
             }
-    }
+        }
 
     override suspend fun create(request: CreateTaskRequest): Result<Unit> = runCatching {
         val task = Task(

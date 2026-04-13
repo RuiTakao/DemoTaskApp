@@ -1,4 +1,4 @@
-package com.takaobrog.roomcompose.presentation.task_edit
+package com.takaobrog.roomcompose.presentation.task_detail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -9,12 +9,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.takaobrog.roomcompose.presentation.task_edit.ui_model.TaskEditEvent
-import com.takaobrog.roomcompose.presentation.task_edit.ui_model.TaskEditUiState
+import com.takaobrog.roomcompose.presentation.task_detail.ui_model.TaskEditEvent
+import com.takaobrog.roomcompose.presentation.task_detail.ui_model.TasKDetailUiState
 
 @Composable
-fun TaskEditScreen(
-    state: TaskEditUiState,
+fun TaskDetailScreen(
+    state: TasKDetailUiState,
     onEvent: (TaskEditEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -27,15 +27,15 @@ fun TaskEditScreen(
             modifier = Modifier.padding(padding)
         ) {
             when (state) {
-                TaskEditUiState.Loading -> {}
-                is TaskEditUiState.Success -> {
+                TasKDetailUiState.Loading -> {}
+                is TasKDetailUiState.Success -> {
                     // TODO スタブ
                     Button(onClick = { onEvent(TaskEditEvent.OnDeleteTaskEvent) }) {
                         Text(state.item.title)
                     }
                 }
 
-                is TaskEditUiState.Error -> {}
+                is TasKDetailUiState.Error -> {}
             }
         }
     }

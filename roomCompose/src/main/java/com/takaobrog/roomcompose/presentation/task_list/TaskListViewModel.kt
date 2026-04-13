@@ -1,6 +1,5 @@
 package com.takaobrog.roomcompose.presentation.task_list
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.takaobrog.roomcompose.domain.use_case.GetTaskListUseCase
@@ -23,11 +22,9 @@ class TaskListViewModel @Inject constructor(
         viewModelScope.launch {
             useCase()
                 .catch { e ->
-                    Log.d("TaskListViewModel", "error: " + e.message)
                     _uiState.value = TaskListUiState.Error(e.message ?: "")
                 }
                 .collect {
-                    Log.d("TaskListViewModel", "success: " + it.size)
                     _uiState.value = TaskListUiState.Success(it)
                 }
         }
