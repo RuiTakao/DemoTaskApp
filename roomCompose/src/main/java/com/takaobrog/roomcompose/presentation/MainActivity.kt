@@ -19,10 +19,10 @@ import com.takaobrog.roomcompose.presentation.task_create.TaskCreateScreen
 import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEffect
 import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEvent
 import com.takaobrog.roomcompose.presentation.task_create.TaskCreateViewModel
-import com.takaobrog.roomcompose.presentation.task_edit.TaskEditScreen
-import com.takaobrog.roomcompose.presentation.task_edit.TaskEditViewModel
-import com.takaobrog.roomcompose.presentation.task_edit.ui_model.TaskEditEffect
-import com.takaobrog.roomcompose.presentation.task_edit.ui_model.TaskEditEvent
+import com.takaobrog.roomcompose.presentation.task_detail.TaskDetailScreen
+import com.takaobrog.roomcompose.presentation.task_detail.TaskDetailViewModel
+import com.takaobrog.roomcompose.presentation.task_detail.ui_model.TaskDetailEffect
+import com.takaobrog.roomcompose.presentation.task_detail.ui_model.TaskEditEvent
 import com.takaobrog.roomcompose.presentation.task_list.ui_model.TaskListEvent
 import com.takaobrog.roomcompose.presentation.ui.theme.DemoTaskAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                                 when (event) {
                                     is TaskListEvent.OnClickTaskListItemEvent ->
                                         navController.navigate(
-                                            route = ScreenRoute.TaskEdit.route + "/${event.uid}"
+                                            route = ScreenRoute.TaskDetail.route + "/${event.uid}"
                                         )
 
                                     TaskListEvent.OnFabEvent ->
@@ -87,21 +87,21 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
-                        route = ScreenRoute.TaskEdit.route + "/{uid}",
+                        route = ScreenRoute.TaskDetail.route + "/{uid}",
                         arguments = listOf(navArgument("uid") { type = NavType.IntType })
                     ) {
-                        val viewModel: TaskEditViewModel = hiltViewModel()
+                        val viewModel: TaskDetailViewModel = hiltViewModel()
                         val state by viewModel.uiState.collectAsState()
 
                         LaunchedEffect(Unit) {
                             viewModel.effect.collect { effect ->
                                 when (effect) {
-                                    TaskEditEffect.NavigateBack -> navController.popBackStack()
+                                    TaskDetailEffect.NavigateBack -> navController.popBackStack()
                                 }
                             }
                         }
 
-                        TaskEditScreen(
+                        TaskDetailScreen(
                             state = state,
                             onEvent = { event ->
                                 when (event) {
