@@ -1,0 +1,28 @@
+package com.takaobrog.roomcompose.util.local_date
+
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class TimeProviderImpl @Inject constructor() : TimeProvider {
+
+    override fun isBeforeNow(targetDate: String?): Boolean {
+        val parserTargetDate = parser(targetDate = targetDate)
+        return parserTargetDate?.isBefore(LocalDate.now()) == true
+    }
+
+    override fun formatterYmd(targetDate: String?): String? {
+        val formatter = DateTimeFormatter.ofPattern(FORMAT_YYYY_MM_DD)
+        val parserTargetDate = parser(targetDate = targetDate)
+        return parserTargetDate?.format(formatter)
+    }
+
+    private fun parser(targetDate: String?): LocalDate? =
+        targetDate?.let { if (it.isNotEmpty()) LocalDate.parse(it) else null }
+
+    companion object {
+        private const val FORMAT_YYYY_MM_DD = "yyyy/MM/dd"
+    }
+}
