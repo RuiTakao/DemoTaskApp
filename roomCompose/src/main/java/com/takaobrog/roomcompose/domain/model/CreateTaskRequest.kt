@@ -4,4 +4,5 @@ data class CreateTaskRequest(
     val title: String,
     val progressPercent: Float,
     val targetDate: String?,
+    val createdAt: String,
 )
