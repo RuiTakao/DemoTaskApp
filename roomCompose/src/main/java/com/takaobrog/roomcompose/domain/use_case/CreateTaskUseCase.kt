@@ -2,16 +2,20 @@ package com.takaobrog.roomcompose.domain.use_case
 
 import com.takaobrog.roomcompose.domain.model.CreateTaskRequest
 import com.takaobrog.roomcompose.domain.repository.TaskRepository
+import com.takaobrog.roomcompose.util.local_date.TimeProvider
 import javax.inject.Inject
 
 class CreateTaskUseCase @Inject constructor(
-    private val repository: TaskRepository
+    private val repository: TaskRepository,
+    private val timeProvider: TimeProvider,
 ) {
     suspend operator fun invoke(name: String, progressPercent: Float, targetDate: String?) {
+        val createdAt = timeProvider.getNow()
         val request = CreateTaskRequest(
             title = name,
             progressPercent = progressPercent,
-            targetDate = targetDate
+            targetDate = targetDate,
+            createdAt = createdAt
         )
         repository.create(request)
     }

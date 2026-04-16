@@ -49,6 +49,7 @@ class TaskRepositoryImpl @Inject constructor(
         val task = Task(
             title = request.title,
             progressPercent = request.progressPercent,
+            createdAt = request.createdAt,
             targetDate = request.targetDate,
         )
         taskDao.insert(task)
