@@ -7,6 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -61,6 +64,7 @@ class MainActivity : ComponentActivity() {
 
                     composable(route = ScreenRoute.TaskCreate.route) {
                         val viewModel: TaskCreateViewModel = hiltViewModel()
+                        var dateValue by rememberSaveable { mutableStateOf<String?>(null) }
 
                         LaunchedEffect(Unit) {
                             viewModel.effect.collect { effect ->
@@ -71,6 +75,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         TaskCreateScreen(
+                            targetDate = dateValue ?: "",
                             onEvent = { event ->
                                 when (event) {
                                     is TaskCreateEvent.OnSubmit ->
@@ -82,6 +87,9 @@ class MainActivity : ComponentActivity() {
 
                                     TaskCreateEvent.OnBackEvent -> navController.popBackStack()
                                 }
+                            },
+                            onValueChangeTargetDate = {
+                                dateValue = viewModel.longToLocalDate(it)
                             }
                         )
                     }

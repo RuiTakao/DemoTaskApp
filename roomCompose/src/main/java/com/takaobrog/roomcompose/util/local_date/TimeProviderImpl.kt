@@ -1,7 +1,9 @@
 package com.takaobrog.roomcompose.util.local_date
 
+import java.time.Instant
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,6 +24,11 @@ class TimeProviderImpl @Inject constructor() : TimeProvider {
 
     override fun getNow(): String =
         OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+
+    override fun longToLocalDate(targetDate: Long): String =
+        Instant.ofEpochMilli(targetDate)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate().toString()
 
     private fun parser(targetDate: String?): LocalDate? =
         targetDate?.let { if (it.isNotEmpty()) LocalDate.parse(it) else null }
