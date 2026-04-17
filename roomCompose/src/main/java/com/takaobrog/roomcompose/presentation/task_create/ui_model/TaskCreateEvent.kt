@@ -4,7 +4,7 @@ sealed class TaskCreateEvent {
     data class OnSubmit(
         val name: String,
         val progressPercent: Float,
-        val targetDate: String?
+        val targetDate: Long?
     ) : TaskCreateEvent()
 
     data object OnBackEvent : TaskCreateEvent()

@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.takaobrog.roomcompose.presentation.component.TargetDate
 import com.takaobrog.roomcompose.presentation.task_list.TaskListScreen
 import com.takaobrog.roomcompose.presentation.task_list.TaskListViewModel
 import com.takaobrog.roomcompose.presentation.task_create.TaskCreateScreen
@@ -64,7 +65,7 @@ class MainActivity : ComponentActivity() {
 
                     composable(route = ScreenRoute.TaskCreate.route) {
                         val viewModel: TaskCreateViewModel = hiltViewModel()
-                        var dateValue by rememberSaveable { mutableStateOf<String?>(null) }
+                        var dateValue by rememberSaveable { mutableStateOf<Long?>(null) }
 
                         LaunchedEffect(Unit) {
                             viewModel.effect.collect { effect ->
@@ -75,7 +76,10 @@ class MainActivity : ComponentActivity() {
                         }
 
                         TaskCreateScreen(
-                            targetDate = dateValue ?: "",
+                            targetDate = TargetDate(
+                                label = viewModel.formatToTargetDate(targetDate = dateValue) ?: "",
+                                data = dateValue
+                            ),
                             onEvent = { event ->
                                 when (event) {
                                     is TaskCreateEvent.OnSubmit ->
@@ -88,9 +92,7 @@ class MainActivity : ComponentActivity() {
                                     TaskCreateEvent.OnBackEvent -> navController.popBackStack()
                                 }
                             },
-                            onValueChangeTargetDate = {
-                                dateValue = viewModel.longToLocalDate(it)
-                            }
+                            onValueChangeTargetDate = { dateValue = it }
                         )
                     }
 

@@ -19,14 +19,12 @@ class TaskCreateViewModel @Inject constructor(
     private val _effect = MutableSharedFlow<TaskCreateEffect>()
     val effect = _effect.asSharedFlow()
 
-    fun submit(name: String, progressPercent: Float, targetDate: String?) {
+    fun submit(name: String, progressPercent: Float, targetDate: Long?) {
         viewModelScope.launch {
             createUseCase(name = name, progressPercent = progressPercent, targetDate = targetDate)
             _effect.emit(TaskCreateEffect.NavigateBack)
         }
     }
 
-    fun longToLocalDate(targetDate: Long): String = timeProvider.longToLocalDate(targetDate)
-
-    fun formatToTargetDate(targetDate: String): String? = timeProvider.formatterYmd(targetDate)
+    fun formatToTargetDate(targetDate: Long?): String? = timeProvider.formatterYmd(targetDate)
 }

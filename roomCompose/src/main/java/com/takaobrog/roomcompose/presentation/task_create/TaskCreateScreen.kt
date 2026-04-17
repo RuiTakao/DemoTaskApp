@@ -28,12 +28,13 @@ import com.takaobrog.roomcompose.presentation.component.DateInputField
 import com.takaobrog.roomcompose.presentation.component.DropdownMenuField
 import com.takaobrog.roomcompose.presentation.component.InputTextField
 import com.takaobrog.roomcompose.presentation.component.ProgressPercentStatus
+import com.takaobrog.roomcompose.presentation.component.TargetDate
 import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskCreateScreen(
-    targetDate: String,
+    targetDate: TargetDate,
     onEvent: (TaskCreateEvent) -> Unit,
     onValueChangeTargetDate: (Long) -> Unit,
     modifier: Modifier = Modifier,
@@ -80,7 +81,7 @@ fun TaskCreateScreen(
 
             DateInputField(
                 label = "期限",
-                value = targetDate,
+                value = targetDate.label,
                 onValueChange = { onValueChangeTargetDate(it) }
             )
 
@@ -89,7 +90,7 @@ fun TaskCreateScreen(
                     TaskCreateEvent.OnSubmit(
                         name = title,
                         progressPercent = selected.data,
-                        targetDate = targetDate,
+                        targetDate = targetDate.data,
                     )
                 )
             }) {
