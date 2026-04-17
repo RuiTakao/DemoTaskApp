@@ -15,7 +15,9 @@ class GetTaskListUseCase @Inject constructor(
         return repository.getList()
             .map { list ->
                 list.map { item ->
-                    val targetDate = timeProvider.formatterYmd(targetDate = item.targetDate)
+                    val targetDate = item.targetDate?.let {
+                        timeProvider.formatterYmd(targetDate = it)
+                    }
                     val isTargetDateOver = timeProvider.isBeforeNow(targetDate = item.targetDate)
                     TaskListUiModel(
                         uid = item.uid,

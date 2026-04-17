@@ -17,7 +17,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -28,17 +27,19 @@ import com.takaobrog.roomcompose.R
 import com.takaobrog.roomcompose.presentation.component.DateInputField
 import com.takaobrog.roomcompose.presentation.component.DropdownMenuField
 import com.takaobrog.roomcompose.presentation.component.InputTextField
+import com.takaobrog.roomcompose.presentation.component.ProgressPercentStatus
 import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskCreateScreen(
+    targetDate: String,
     onEvent: (TaskCreateEvent) -> Unit,
+    onValueChangeTargetDate: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var title by rememberSaveable { mutableStateOf("") }
-    var selected by rememberSaveable { mutableFloatStateOf(0f) }
-    var dateValue by rememberSaveable { mutableStateOf<String?>(null) }
+    var selected by rememberSaveable { mutableStateOf(ProgressPercentStatus.ZERO) }
 
     Scaffold(
         modifier = modifier
@@ -73,23 +74,22 @@ fun TaskCreateScreen(
 
             DropdownMenuField(
                 label = "進捗",
+                value = selected.label,
                 onValueChange = { selected = it }
             )
 
             DateInputField(
                 label = "期限",
-                value = dateValue,
-                onValueChange = {
-                    dateValue = it
-                }
+                value = targetDate,
+                onValueChange = { onValueChangeTargetDate(it) }
             )
 
             Button(onClick = {
                 onEvent(
                     TaskCreateEvent.OnSubmit(
                         name = title,
-                        progressPercent = selected,
-                        targetDate = dateValue,
+                        progressPercent = selected.data,
+                        targetDate = targetDate,
                     )
                 )
             }) {

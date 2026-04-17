@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
-private enum class ProgressPercentStatus(val label: String, val data: Float) {
+enum class ProgressPercentStatus(val label: String, val data: Float) {
     ZERO("0%", 0.0f),
     ONE("10%", 0.1f),
     TWO("20%", 0.2f),
@@ -32,11 +32,11 @@ private enum class ProgressPercentStatus(val label: String, val data: Float) {
 @Composable
 fun DropdownMenuField(
     label: String,
-    onValueChange: (Float) -> Unit,
+    value: String,
+    onValueChange: (ProgressPercentStatus) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
-    var selected by rememberSaveable { mutableStateOf(ProgressPercentStatus.ZERO) }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -45,7 +45,7 @@ fun DropdownMenuField(
     ) {
         DefaultTextField(
             label = label,
-            value = selected.label,
+            value = value,
             modifier = Modifier.menuAnchor(
                 type = MenuAnchorType.PrimaryEditable,
                 enabled = true
@@ -63,7 +63,7 @@ fun DropdownMenuField(
                 DropdownMenuItem(
                     text = { Text(it.label) },
                     onClick = {
-                        onValueChange(it.data)
+                        onValueChange(it)
                         expanded = false
                     }
                 )
@@ -77,6 +77,7 @@ fun DropdownMenuField(
 fun DropdownMenuField_Preview() {
     DropdownMenuField(
         label = "進捗",
+        value = ProgressPercentStatus.MAX.label,
         onValueChange = {},
     )
 }

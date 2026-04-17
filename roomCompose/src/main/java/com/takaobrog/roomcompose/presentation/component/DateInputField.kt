@@ -15,15 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
-import java.time.Instant
-import java.time.ZoneId
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateInputField(
     label: String,
     value: String?,
-    onValueChange: (String) -> Unit,
+    onValueChange: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var isDialog by rememberSaveable { mutableStateOf(false) }
@@ -48,13 +46,7 @@ fun DateInputField(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        // TODO 依存関係修正
-                        dateState.selectedDateMillis?.let {
-                            val date = Instant.ofEpochMilli(it)
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDate()
-                            onValueChange(date.toString())
-                        }
+                        dateState.selectedDateMillis?.let { onValueChange(it) }
                         isDialog = false
                     }
                 ) {
@@ -82,7 +74,7 @@ fun DateInputField_Preview_emptyValue() {
 fun DateInputField_Preview_notEmptyValue() {
     DateInputField(
         label = "期限",
-        value = "2026-04-23",
+        value = "2026/4/23",
         onValueChange = {},
     )
 }
