@@ -7,16 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.takaobrog.roomcompose.presentation.component.TargetDate
 import com.takaobrog.roomcompose.presentation.task_list.TaskListScreen
 import com.takaobrog.roomcompose.presentation.task_list.TaskListViewModel
 import com.takaobrog.roomcompose.presentation.task_create.TaskCreateScreen
@@ -65,7 +61,7 @@ class MainActivity : ComponentActivity() {
 
                     composable(route = ScreenRoute.TaskCreate.route) {
                         val viewModel: TaskCreateViewModel = hiltViewModel()
-                        var dateValue by rememberSaveable { mutableStateOf<Long?>(null) }
+                        val formState by viewModel.formState.collectAsState()
 
                         LaunchedEffect(Unit) {
                             viewModel.effect.collect { effect ->
@@ -76,23 +72,26 @@ class MainActivity : ComponentActivity() {
                         }
 
                         TaskCreateScreen(
-                            targetDate = TargetDate(
-                                label = viewModel.formatToTargetDate(targetDate = dateValue) ?: "",
-                                data = dateValue
-                            ),
+                            formState = formState,
                             onEvent = { event ->
                                 when (event) {
-                                    is TaskCreateEvent.OnSubmit ->
-                                        viewModel.submit(
-                                            name = event.name,
-                                            progressPercent = event.progressPercent,
-                                            targetDate = event.targetDate,
-                                        )
+                                    is TaskCreateEvent.OnSubmit -> viewModel.submit()
+
+                                    is TaskCreateEvent.OnValueChangeTitle -> viewModel.inputTitle(
+                                        title = event.title
+                                    )
+
+                                    is TaskCreateEvent.OnValueChangeProgressPercent -> viewModel.inputProgressPercent(
+                                        progressPercent = event.progressPercent
+                                    )
+
+                                    is TaskCreateEvent.OnValueChangeTargetDate -> viewModel.inputTargetDate(
+                                        targetDate = event.targetDate
+                                    )
 
                                     TaskCreateEvent.OnBackEvent -> navController.popBackStack()
                                 }
                             },
-                            onValueChangeTargetDate = { dateValue = it }
                         )
                     }
 

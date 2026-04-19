@@ -16,11 +16,6 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 
-data class TargetDate(
-    val label: String,
-    val data: Long?,
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateInputField(
