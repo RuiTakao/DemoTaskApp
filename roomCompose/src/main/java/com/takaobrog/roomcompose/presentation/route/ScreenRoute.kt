@@ -1,4 +1,4 @@
-package com.takaobrog.roomcompose.presentation
+package com.takaobrog.roomcompose.presentation.route
 
 sealed class ScreenRoute(val route: String) {
     object TaskList : ScreenRoute("task_list")

@@ -1,4 +1,4 @@
-package com.takaobrog.roomcompose.presentation.task_create.ui_model
+package com.takaobrog.roomcompose.presentation.screen.task_create.ui_model
 
 import com.takaobrog.roomcompose.presentation.component.ProgressPercentStatus
 

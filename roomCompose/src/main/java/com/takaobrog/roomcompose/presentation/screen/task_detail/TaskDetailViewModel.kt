@@ -1,12 +1,12 @@
-package com.takaobrog.roomcompose.presentation.task_detail
+package com.takaobrog.roomcompose.presentation.screen.task_detail
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.takaobrog.roomcompose.domain.repository.TaskRepository
-import com.takaobrog.roomcompose.presentation.task_detail.ui_model.TaskDetailEffect
-import com.takaobrog.roomcompose.presentation.task_detail.ui_model.TasKDetailUiState
+import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TasKDetailUiState
+import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TaskDetailEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

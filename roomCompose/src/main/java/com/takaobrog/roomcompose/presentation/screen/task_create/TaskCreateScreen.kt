@@ -1,4 +1,4 @@
-package com.takaobrog.roomcompose.presentation.task_create
+package com.takaobrog.roomcompose.presentation.screen.task_create
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,8 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import com.takaobrog.roomcompose.R
 import com.takaobrog.roomcompose.presentation.component.TaskCreateForm
-import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEvent
-import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateFormState
+import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateEvent
+import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateFormState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
