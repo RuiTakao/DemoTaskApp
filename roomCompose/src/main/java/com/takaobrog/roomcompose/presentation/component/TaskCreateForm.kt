@@ -5,6 +5,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEvent
 import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateFormState
 
@@ -43,4 +44,26 @@ fun TaskCreateForm(
             Text(text = "登録")
         }
     }
+}
+
+@Preview
+@Composable
+fun TaskCreateForm_Preview() {
+    TaskCreateForm(
+        formState = TaskCreateFormState(),
+        onEvent = {}
+    )
+}
+
+@Preview
+@Composable
+fun TaskCreateForm_Preview_InValue() {
+    TaskCreateForm(
+        formState = TaskCreateFormState(
+            title = "Room学習",
+            progressPercent = ProgressPercentStatus.SIX,
+            formatTargetDate = "2026/4/12"
+        ),
+        onEvent = {}
+    )
 }
