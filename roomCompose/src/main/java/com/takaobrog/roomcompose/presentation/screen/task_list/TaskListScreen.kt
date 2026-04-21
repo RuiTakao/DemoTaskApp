@@ -1,4 +1,4 @@
-package com.takaobrog.roomcompose.presentation.task_list
+package com.takaobrog.roomcompose.presentation.screen.task_list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.takaobrog.roomcompose.presentation.component.FAButton
-import com.takaobrog.roomcompose.presentation.task_list.ui_model.TaskListEvent
 import com.takaobrog.roomcompose.domain.model.TaskListUiModel
 import com.takaobrog.roomcompose.presentation.component.TaskListItem
-import com.takaobrog.roomcompose.presentation.task_list.ui_model.TaskListUiState
+import com.takaobrog.roomcompose.presentation.screen.task_list.ui_model.TaskListEvent
+import com.takaobrog.roomcompose.presentation.screen.task_list.ui_model.TaskListUiState
 
 @Composable
 fun TaskListScreen(

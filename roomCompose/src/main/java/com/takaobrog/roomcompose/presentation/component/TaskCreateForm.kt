@@ -6,8 +6,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEvent
-import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateFormState
+import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateEvent
+import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateFormState
 
 @Composable
 fun TaskCreateForm(

@@ -1,11 +1,11 @@
-package com.takaobrog.roomcompose.presentation.task_create
+package com.takaobrog.roomcompose.presentation.screen.task_create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.takaobrog.roomcompose.domain.use_case.CreateTaskUseCase
 import com.takaobrog.roomcompose.presentation.component.ProgressPercentStatus
-import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEffect
-import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateFormState
+import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateEffect
+import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateFormState
 import com.takaobrog.roomcompose.util.local_date.TimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -7,10 +7,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.takaobrog.roomcompose.presentation.task_create.TaskCreateScreen
-import com.takaobrog.roomcompose.presentation.task_create.TaskCreateViewModel
-import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEffect
-import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEvent
+import com.takaobrog.roomcompose.presentation.screen.task_create.TaskCreateScreen
+import com.takaobrog.roomcompose.presentation.screen.task_create.TaskCreateViewModel
+import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateEffect
+import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateEvent
 
 fun NavGraphBuilder.taskCreateRoute(navController: NavHostController) {
     composable(route = ScreenRoute.TaskCreate.route) {

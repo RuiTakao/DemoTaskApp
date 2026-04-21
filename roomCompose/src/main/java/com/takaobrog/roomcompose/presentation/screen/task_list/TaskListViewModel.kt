@@ -1,10 +1,10 @@
-package com.takaobrog.roomcompose.presentation.task_list
+package com.takaobrog.roomcompose.presentation.screen.task_list
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.takaobrog.roomcompose.domain.use_case.GetTaskListUseCase
-import com.takaobrog.roomcompose.presentation.task_list.ui_model.TaskListUiState
+import com.takaobrog.roomcompose.presentation.screen.task_list.ui_model.TaskListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

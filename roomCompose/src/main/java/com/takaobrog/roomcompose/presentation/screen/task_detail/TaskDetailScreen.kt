@@ -1,4 +1,4 @@
-package com.takaobrog.roomcompose.presentation.task_detail
+package com.takaobrog.roomcompose.presentation.screen.task_detail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -9,8 +9,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.takaobrog.roomcompose.presentation.task_detail.ui_model.TaskEditEvent
-import com.takaobrog.roomcompose.presentation.task_detail.ui_model.TasKDetailUiState
+import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TasKDetailUiState
+import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TaskEditEvent
 
 @Composable
 fun TaskDetailScreen(

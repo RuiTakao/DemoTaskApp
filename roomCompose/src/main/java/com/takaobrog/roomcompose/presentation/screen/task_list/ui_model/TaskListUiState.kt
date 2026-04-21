@@ -1,4 +1,4 @@
-package com.takaobrog.roomcompose.presentation.task_list.ui_model
+package com.takaobrog.roomcompose.presentation.screen.task_list.ui_model
 
 import com.takaobrog.roomcompose.domain.model.TaskListUiModel
 

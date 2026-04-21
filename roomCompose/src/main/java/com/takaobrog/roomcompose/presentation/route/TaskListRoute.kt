@@ -6,9 +6,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.takaobrog.roomcompose.presentation.task_list.TaskListScreen
-import com.takaobrog.roomcompose.presentation.task_list.TaskListViewModel
-import com.takaobrog.roomcompose.presentation.task_list.ui_model.TaskListEvent
+import com.takaobrog.roomcompose.presentation.screen.task_list.TaskListScreen
+import com.takaobrog.roomcompose.presentation.screen.task_list.TaskListViewModel
+import com.takaobrog.roomcompose.presentation.screen.task_list.ui_model.TaskListEvent
 
 fun NavGraphBuilder.taskListRoute(navController: NavHostController) {
     composable(route = ScreenRoute.TaskList.route) {
