@@ -11,12 +11,12 @@ import javax.inject.Singleton
 @Singleton
 class TimeProviderImpl @Inject constructor() : TimeProvider {
 
-    override fun isBeforeNow(targetDate: String?): Boolean {
+    override fun isBeforeNow(targetDate: Long?): Boolean {
         val parserTargetDate = parser(targetDate = targetDate)
         return parserTargetDate?.isBefore(LocalDate.now()) == true
     }
 
-    override fun formatterYmd(targetDate: String?): String? {
+    override fun formatterYmd(targetDate: Long?): String? {
         val formatter = DateTimeFormatter.ofPattern(FORMAT_YYYY_MM_DD)
         val parserTargetDate = parser(targetDate = targetDate)
         return parserTargetDate?.format(formatter)
@@ -25,13 +25,12 @@ class TimeProviderImpl @Inject constructor() : TimeProvider {
     override fun getNow(): String =
         OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
 
-    override fun longToLocalDate(targetDate: Long): String =
-        Instant.ofEpochMilli(targetDate)
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate().toString()
-
-    private fun parser(targetDate: String?): LocalDate? =
-        targetDate?.let { if (it.isNotEmpty()) LocalDate.parse(it) else null }
+    private fun parser(targetDate: Long?): LocalDate? =
+        targetDate?.let {
+            Instant.ofEpochMilli(it)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+        }
 
     companion object {
         private const val FORMAT_YYYY_MM_DD = "yyyy/MM/dd"

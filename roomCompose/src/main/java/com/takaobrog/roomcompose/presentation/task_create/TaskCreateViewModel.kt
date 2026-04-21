@@ -3,11 +3,15 @@ package com.takaobrog.roomcompose.presentation.task_create
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.takaobrog.roomcompose.domain.use_case.CreateTaskUseCase
+import com.takaobrog.roomcompose.presentation.component.ProgressPercentStatus
 import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateEffect
+import com.takaobrog.roomcompose.presentation.task_create.ui_model.TaskCreateFormState
 import com.takaobrog.roomcompose.util.local_date.TimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,14 +23,31 @@ class TaskCreateViewModel @Inject constructor(
     private val _effect = MutableSharedFlow<TaskCreateEffect>()
     val effect = _effect.asSharedFlow()
 
-    fun submit(name: String, progressPercent: Float, targetDate: String?) {
+    private val _formState = MutableStateFlow(TaskCreateFormState())
+    val formState = _formState.asStateFlow()
+
+    fun inputTitle(title: String) {
+        _formState.value = _formState.value.copy(title = title)
+    }
+
+    fun inputProgressPercent(progressPercent: ProgressPercentStatus) {
+        _formState.value = _formState.value.copy(progressPercent = progressPercent)
+    }
+
+    fun inputTargetDate(targetDate: Long?) {
+        val formatTargetDate = targetDate?.let { timeProvider.formatterYmd(it) } ?: ""
+        _formState.value = _formState.value.copy(targetDate = targetDate)
+        _formState.value = _formState.value.copy(formatTargetDate = formatTargetDate)
+    }
+
+    fun submit() {
         viewModelScope.launch {
-            createUseCase(name = name, progressPercent = progressPercent, targetDate = targetDate)
+            createUseCase(
+                title = _formState.value.title,
+                progressPercent = _formState.value.progressPercent.data,
+                targetDate = _formState.value.targetDate,
+            )
             _effect.emit(TaskCreateEffect.NavigateBack)
         }
     }
-
-    fun longToLocalDate(targetDate: Long): String = timeProvider.longToLocalDate(targetDate)
-
-    fun formatToTargetDate(targetDate: String): String? = timeProvider.formatterYmd(targetDate)
 }

@@ -10,5 +10,5 @@ data class Task(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "progressPercent") val progressPercent: Float,
     @ColumnInfo(name = "createdAt") val createdAt: String,
-    @ColumnInfo(name = "targetDate") val targetDate: String? = null,
+    @ColumnInfo(name = "targetDate") val targetDate: Long? = null,
 )

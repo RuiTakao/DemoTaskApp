@@ -7,9 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -64,7 +61,7 @@ class MainActivity : ComponentActivity() {
 
                     composable(route = ScreenRoute.TaskCreate.route) {
                         val viewModel: TaskCreateViewModel = hiltViewModel()
-                        var dateValue by rememberSaveable { mutableStateOf<String?>(null) }
+                        val formState by viewModel.formState.collectAsState()
 
                         LaunchedEffect(Unit) {
                             viewModel.effect.collect { effect ->
@@ -75,22 +72,26 @@ class MainActivity : ComponentActivity() {
                         }
 
                         TaskCreateScreen(
-                            targetDate = dateValue ?: "",
+                            formState = formState,
                             onEvent = { event ->
                                 when (event) {
-                                    is TaskCreateEvent.OnSubmit ->
-                                        viewModel.submit(
-                                            name = event.name,
-                                            progressPercent = event.progressPercent,
-                                            targetDate = event.targetDate,
-                                        )
+                                    is TaskCreateEvent.OnSubmit -> viewModel.submit()
+
+                                    is TaskCreateEvent.OnValueChangeTitle -> viewModel.inputTitle(
+                                        title = event.title
+                                    )
+
+                                    is TaskCreateEvent.OnValueChangeProgressPercent -> viewModel.inputProgressPercent(
+                                        progressPercent = event.progressPercent
+                                    )
+
+                                    is TaskCreateEvent.OnValueChangeTargetDate -> viewModel.inputTargetDate(
+                                        targetDate = event.targetDate
+                                    )
 
                                     TaskCreateEvent.OnBackEvent -> navController.popBackStack()
                                 }
                             },
-                            onValueChangeTargetDate = {
-                                dateValue = viewModel.longToLocalDate(it)
-                            }
                         )
                     }
 
