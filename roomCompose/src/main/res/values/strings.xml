@@ -6,8 +6,11 @@
     <string name="task_list_item_target_date_label">期限: %1$s</string>
     <string name="task_list_item_target_date_empty">期限: 未定</string>
     <!-- タスク作成 -->
+    <string name="task_create_title">タスク作成</string>
     <string name="task_create_form_title">タスク名</string>
     <string name="task_create_form_progress_percent">進捗</string>
     <string name="task_create_form_target_date">期限</string>
     <string name="task_create_form_submit">作成</string>
+    <!-- TopAppBar -->
+    <string name="back_button_description">戻る</string>
 </resources>
