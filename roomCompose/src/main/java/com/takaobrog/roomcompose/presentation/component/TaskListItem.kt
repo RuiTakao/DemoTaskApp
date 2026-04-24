@@ -71,31 +71,12 @@ private fun DetailView(progressPercent: Float, targetDate: String?) {
                 bottom = dimensionResource(id = R.dimen.task_list_item_padding),
             )
     ) {
-        ProgressPercentView(progressPercent = progressPercent)
-        TargetDateView(targetDate = targetDate)
-    }
-}
-
-@Composable
-private fun ProgressPercentView(progressPercent: Float) {
-    Row {
-        DefaultText(
-            text = stringResource(id = R.string.task_list_item_progress_percent_label),
+        ProgressPercentView(
+            label = stringResource(id = R.string.task_list_item_progress_percent_label),
+            progressPercent = progressPercent,
         )
-        LinearProgressIndicator(
-            progress = { progressPercent },
-            modifier = Modifier
-                .height(height = 16.dp)
-                .padding(start = 4.dp),
-            color = Color.Green,
-            trackColor = Color.Black,
-        )
+        TargetDateText(targetDate = targetDate, modifier = Modifier.padding(top = 8.dp))
     }
-}
-
-@Composable
-private fun TargetDateView(targetDate: String?) {
-    TargetDateText(targetDate, modifier = Modifier.padding(top = 8.dp))
 }
 
 @Preview

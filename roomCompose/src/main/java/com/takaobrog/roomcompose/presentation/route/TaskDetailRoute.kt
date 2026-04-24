@@ -12,7 +12,7 @@ import androidx.navigation.navArgument
 import com.takaobrog.roomcompose.presentation.screen.task_detail.TaskDetailScreen
 import com.takaobrog.roomcompose.presentation.screen.task_detail.TaskDetailViewModel
 import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TaskDetailEffect
-import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TaskEditEvent
+import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TaskDetailEvent
 
 fun NavGraphBuilder.taskDetailRoute(navController: NavHostController) {
     composable(
@@ -34,7 +34,9 @@ fun NavGraphBuilder.taskDetailRoute(navController: NavHostController) {
             state = state,
             onEvent = { event ->
                 when (event) {
-                    is TaskEditEvent.OnDeleteTaskEvent -> viewModel.delete()
+                    is TaskDetailEvent.OnDeleteTaskEvent -> viewModel.delete()
+
+                    TaskDetailEvent.OnBackEvent -> navController.popBackStack()
                 }
             }
         )
