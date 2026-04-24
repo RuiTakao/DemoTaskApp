@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.takaobrog.roomcompose.domain.repository.TaskRepository
+import com.takaobrog.roomcompose.domain.use_case.DeleteTaskDetailUseCase
+import com.takaobrog.roomcompose.domain.use_case.GetTaskDetailUseCase
 import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TasKDetailUiState
 import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TaskDetailEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val repository: TaskRepository,
+    private val getUseCase: GetTaskDetailUseCase,
+    private val deleteUseCase: DeleteTaskDetailUseCase,
 ) : ViewModel() {
     val uid: Int = savedStateHandle["uid"] ?: 0
 
@@ -30,13 +32,11 @@ class TaskDetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            repository.getTask(uid = uid).fold(
+            getUseCase(uid = uid).fold(
                 onSuccess = {
-                    it?.let {
-                        _uiState.value = TasKDetailUiState.Success(it)
-                    }
+                    _uiState.value = TasKDetailUiState.Success(it)
                 },
-                onFailure = { e->
+                onFailure = { e ->
                     Log.e(TAG, "getTask failed", e)
                     _uiState.value = TasKDetailUiState.Error(e.message)
                 }
@@ -46,7 +46,7 @@ class TaskDetailViewModel @Inject constructor(
 
     fun delete() {
         viewModelScope.launch {
-            repository.delete(uid = uid)
+            deleteUseCase(uid = uid)
             _effect.emit(TaskDetailEffect.NavigateBack)
         }
     }
