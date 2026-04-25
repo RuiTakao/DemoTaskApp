@@ -31,7 +31,7 @@ class TaskRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun getTask(uid: Int): Result<GetTaskResponse?> =
+    override suspend fun getTaskDetail(uid: Int): Result<GetTaskResponse?> =
         withContext(Dispatchers.IO) {
             runCatching {
                 taskDao.getTask(uid = uid)?.let {

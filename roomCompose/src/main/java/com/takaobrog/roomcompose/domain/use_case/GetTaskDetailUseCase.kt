@@ -10,7 +10,7 @@ class GetTaskDetailUseCase @Inject constructor(
     private val timeProvider: TimeProvider,
 ) {
     suspend operator fun invoke(uid: Int): Result<TaskDetailUiModel> {
-        return repository.getTask(uid = uid).fold(
+        return repository.getTaskDetail(uid = uid).fold(
             onSuccess = {
                 it?.let { task ->
                     val targetDate = task.targetDate?.let {
