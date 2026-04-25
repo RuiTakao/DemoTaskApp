@@ -70,6 +70,20 @@ class TaskRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun update(
+        uid: Int,
+        title: String,
+        progressPercent: Float,
+        targetDate: Long?
+    ): Result<Unit> = runCatching {
+        taskDao.update(
+            uid = uid,
+            title = title,
+            progressPercent = progressPercent,
+            targetDate = targetDate,
+        )
+    }
+
     override suspend fun delete(uid: Int): Result<Unit> = runCatching {
         taskDao.delete(uid = uid)
     }

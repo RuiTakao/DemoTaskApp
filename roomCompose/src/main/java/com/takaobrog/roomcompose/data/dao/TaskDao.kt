@@ -17,6 +17,13 @@ interface TaskDao {
     @Insert
     suspend fun insert(vararg task: Task)
 
+    @Query("" +
+            "UPDATE task " +
+            "SET title =:title, progressPercent =:progressPercent, targetDate =:targetDate " +
+            "WHERE uid=:uid" +
+            "")
+    suspend fun update(uid: Int, title: String, progressPercent: Float, targetDate: Long?)
+
     @Query("DELETE FROM task WHERE uid =:uid")
     suspend fun delete(uid: Int)
 }

@@ -11,5 +11,12 @@ interface TaskRepository {
     suspend fun getTaskDetail(uid: Int): Result<GetTaskDetailResponse?>
     suspend fun create(request: CreateTaskRequest): Result<Unit>
     suspend fun getTaskEdit(uid: Int): Result<GetTaskEditResponse?>
+    suspend fun update(
+        uid: Int,
+        title: String,
+        progressPercent: Float,
+        targetDate: Long?,
+    ): Result<Unit>
+
     suspend fun delete(uid: Int): Result<Unit>
 }
