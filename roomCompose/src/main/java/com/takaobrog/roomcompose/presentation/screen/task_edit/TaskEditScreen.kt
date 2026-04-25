@@ -63,7 +63,7 @@ fun TaskEditScreen(
             Row {
                 DefaultButton(
                     text = stringResource(id = R.string.task_edit_form_submit_ok),
-                    onClick = { },
+                    onClick = { onEvent(TaskEditEvent.OnSubmit) },
                     modifier = Modifier.padding(top = 16.dp),
                 )
                 DefaultButton(

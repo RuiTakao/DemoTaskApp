@@ -5,11 +5,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.takaobrog.roomcompose.domain.use_case.GetTaskEditUseCase
+import com.takaobrog.roomcompose.domain.use_case.UpdateTaskEditUseCase
+import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditEffect
 import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditFormState
 import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditUiState
 import com.takaobrog.roomcompose.util.local_date.TimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,9 +22,13 @@ import javax.inject.Inject
 class TaskEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getUseCase: GetTaskEditUseCase,
+    private val updateUseCase: UpdateTaskEditUseCase,
     private val timeProvider: TimeProvider,
 ) : ViewModel() {
     val uid: Int = savedStateHandle["uid"] ?: 0
+
+    private val _effect = MutableSharedFlow<TaskEditEffect>()
+    val effect = _effect.asSharedFlow()
 
     private val _uiState = MutableStateFlow<TaskEditUiState>(TaskEditUiState.Loading)
     val uiState = _uiState.asStateFlow()
@@ -57,7 +65,15 @@ class TaskEditViewModel @Inject constructor(
     }
 
     fun submit() {
-        viewModelScope.launch { }
+        viewModelScope.launch {
+            updateUseCase(
+                uid = uid,
+                title = _formState.value.title,
+                progressPercent = _formState.value.progressPercent.data,
+                targetDate = _formState.value.targetDate,
+            )
+            _effect.emit(TaskEditEffect.NavigateBack)
+        }
     }
 
     private fun formatTargetDate(targetDate: Long?) =
