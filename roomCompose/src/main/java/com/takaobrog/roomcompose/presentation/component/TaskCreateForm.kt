@@ -25,7 +25,7 @@ fun TaskCreateForm(
             onValueChange = { onEvent(TaskCreateEvent.OnValueChangeTitle(title = it)) },
         )
 
-        DropdownMenuField(
+        ProgressPercentInputField(
             label = stringResource(id = R.string.task_create_form_progress_percent),
             value = formState.progressPercent.label,
             onValueChange = {
@@ -67,7 +67,8 @@ fun TaskCreateForm_Preview_InValue() {
         formState = TaskCreateFormState(
             title = "Room学習",
             progressPercent = ProgressPercentStatus.SIX,
-            formatTargetDate = "2026/4/12"
+            targetDate = 1775962688,
+            formatTargetDate = "2026/4/12",
         ),
         onEvent = {}
     )

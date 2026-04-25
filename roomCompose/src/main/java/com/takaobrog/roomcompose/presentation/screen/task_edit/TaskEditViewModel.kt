@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.takaobrog.roomcompose.domain.use_case.GetTaskEditUseCase
 import com.takaobrog.roomcompose.domain.use_case.UpdateTaskEditUseCase
+import com.takaobrog.roomcompose.presentation.component.ProgressPercentStatus
 import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditEffect
 import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditFormState
 import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditUiState
@@ -40,8 +41,10 @@ class TaskEditViewModel @Inject constructor(
         viewModelScope.launch {
             getUseCase(uid = uid).fold(
                 onSuccess = {
+                    val progressPercent = ProgressPercentStatus.formData(value = it.progressPercent)
                     _formState.value = TaskEditFormState(
                         title = it.title,
+                        progressPercent = progressPercent ?: ProgressPercentStatus.ZERO,
                         targetDate = it.targetDate,
                         formatTargetDate = formatTargetDate(targetDate = it.targetDate),
                     )
@@ -56,6 +59,10 @@ class TaskEditViewModel @Inject constructor(
 
     fun inputTitle(title: String) {
         _formState.value = _formState.value.copy(title = title)
+    }
+
+    fun inputProgressPercent(progressPercent: ProgressPercentStatus) {
+        _formState.value = _formState.value.copy(progressPercent = progressPercent)
     }
 
     fun inputTargetDate(targetDate: Long?) {

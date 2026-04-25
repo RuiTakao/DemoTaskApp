@@ -25,12 +25,20 @@ enum class ProgressPercentStatus(val label: String, val data: Float) {
     SEVEN("70%", 0.7f),
     EIGHT("80%", 0.8f),
     NINE("90%", 0.9f),
-    MAX("100%", 1.0f),
+    MAX("100%", 1.0f);
+
+    companion object {
+        fun formData(value: Float) : ProgressPercentStatus? {
+            return entries.firstOrNull {
+                kotlin.math.abs(it.data - value) < 0.0001f
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropdownMenuField(
+fun ProgressPercentInputField(
     label: String,
     value: String,
     onValueChange: (ProgressPercentStatus) -> Unit,
@@ -75,7 +83,7 @@ fun DropdownMenuField(
 @Preview
 @Composable
 fun DropdownMenuField_Preview() {
-    DropdownMenuField(
+    ProgressPercentInputField(
         label = "進捗",
         value = ProgressPercentStatus.MAX.label,
         onValueChange = {},
