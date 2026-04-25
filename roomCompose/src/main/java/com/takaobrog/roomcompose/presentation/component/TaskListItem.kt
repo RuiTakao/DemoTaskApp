@@ -12,6 +12,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,7 +33,7 @@ fun TaskListItem(
             .clickable { onItemClick() },
         shape = RoundedCornerShape(size = 16.dp),
         border = BorderStroke(width = 1.dp, color = Color.Black),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
     ) {
         TitleView(title = title, isTargetDateOver = isTargetDateOver)
         DetailView(progressPercent = progressPercent, targetDate = targetDate)
