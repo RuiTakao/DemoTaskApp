@@ -32,10 +32,11 @@ class TaskRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun getTaskDetail(uid: Int): Result<GetTaskDetailResponse?> =
-        withContext(Dispatchers.IO) {
-            runCatching {
-                taskDao.getTask(uid = uid)?.let {
+    override fun getTaskDetail(uid: Int): Flow<GetTaskDetailResponse?> {
+        return taskDao.getDetail(uid = uid)
+            .distinctUntilChanged()
+            .map { item ->
+                item?.let {
                     GetTaskDetailResponse(
                         uid = it.uid,
                         title = it.title,
@@ -44,7 +45,7 @@ class TaskRepositoryImpl @Inject constructor(
                     )
                 }
             }
-        }
+    }
 
     override suspend fun create(request: CreateTaskRequest): Result<Unit> = runCatching {
         val task = Task(
@@ -59,7 +60,7 @@ class TaskRepositoryImpl @Inject constructor(
     override suspend fun getTaskEdit(uid: Int): Result<GetTaskEditResponse?> =
         withContext(Dispatchers.IO) {
             runCatching {
-                taskDao.getTask(uid = uid)?.let {
+                taskDao.getEdit(uid = uid)?.let {
                     GetTaskEditResponse(
                         uid = it.uid,
                         title = it.title,
