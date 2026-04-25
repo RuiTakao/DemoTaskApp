@@ -29,7 +29,7 @@ fun FAButton(onClick: () -> Unit) {
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun FAButtonPreview() {
     FAButton(onClick = {})
