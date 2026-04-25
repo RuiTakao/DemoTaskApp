@@ -12,10 +12,20 @@ interface TaskDao {
     fun getAll(): Flow<List<Task>>
 
     @Query("SELECT * FROM task WHERE uid =:uid")
-    fun getTask(uid: Int): Task?
+    fun getDetail(uid: Int): Flow<Task?>
 
     @Insert
     suspend fun insert(vararg task: Task)
+
+    @Query("SELECT * FROM task WHERE uid =:uid")
+    fun getEdit(uid: Int): Task?
+
+    @Query("" +
+            "UPDATE task " +
+            "SET title =:title, progressPercent =:progressPercent, targetDate =:targetDate " +
+            "WHERE uid=:uid" +
+            "")
+    suspend fun update(uid: Int, title: String, progressPercent: Float, targetDate: Long?)
 
     @Query("DELETE FROM task WHERE uid =:uid")
     suspend fun delete(uid: Int)

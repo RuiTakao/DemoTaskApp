@@ -1,6 +1,6 @@
 package com.takaobrog.roomcompose.domain.model
 
-data class GetTaskResponse(
+data class GetTaskEditResponse (
     val uid: Int,
     val title: String,
     val progressPercent: Float,

@@ -21,9 +21,7 @@ fun DefaultButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = modifier.padding(horizontal = 16.dp),
         shape = RoundedCornerShape(size = 8.dp),
     ) {
         Text(

@@ -1,6 +1,7 @@
 package com.takaobrog.roomcompose.presentation.component
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -45,7 +46,7 @@ fun TaskCreateForm(
         DefaultButton(
             text = stringResource(id = R.string.task_create_form_submit),
             onClick = { onEvent(TaskCreateEvent.OnSubmit) },
-            modifier = Modifier.padding(top = 16.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
         )
     }
 }

@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,15 +33,14 @@ class TaskDetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getUseCase(uid = uid).fold(
-                onSuccess = {
-                    _uiState.value = TasKDetailUiState.Success(it)
-                },
-                onFailure = { e ->
-                    Log.e(TAG, "getTask failed", e)
-                    _uiState.value = TasKDetailUiState.Error(e.message)
+            getUseCase(uid = uid)
+                .catch { e ->
+                    _uiState.value = TasKDetailUiState.Error(message = e.message)
+                    Log.e(TAG, "message ${e.message}")
                 }
-            )
+                .collect {
+                    _uiState.value = TasKDetailUiState.Success(item = it)
+                }
         }
     }
 

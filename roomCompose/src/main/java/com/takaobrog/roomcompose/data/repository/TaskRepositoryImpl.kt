@@ -4,7 +4,8 @@ import com.takaobrog.roomcompose.data.dao.TaskDao
 import com.takaobrog.roomcompose.data.model.Task
 import com.takaobrog.roomcompose.domain.model.CreateTaskRequest
 import com.takaobrog.roomcompose.domain.model.GetTaskListResponse
-import com.takaobrog.roomcompose.domain.model.GetTaskResponse
+import com.takaobrog.roomcompose.domain.model.GetTaskDetailResponse
+import com.takaobrog.roomcompose.domain.model.GetTaskEditResponse
 import com.takaobrog.roomcompose.domain.repository.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -31,11 +32,12 @@ class TaskRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun getTask(uid: Int): Result<GetTaskResponse?> =
-        withContext(Dispatchers.IO) {
-            runCatching {
-                taskDao.getTask(uid = uid)?.let {
-                    GetTaskResponse(
+    override fun getTaskDetail(uid: Int): Flow<GetTaskDetailResponse?> {
+        return taskDao.getDetail(uid = uid)
+            .distinctUntilChanged()
+            .map { item ->
+                item?.let {
+                    GetTaskDetailResponse(
                         uid = it.uid,
                         title = it.title,
                         progressPercent = it.progressPercent,
@@ -43,7 +45,7 @@ class TaskRepositoryImpl @Inject constructor(
                     )
                 }
             }
-        }
+    }
 
     override suspend fun create(request: CreateTaskRequest): Result<Unit> = runCatching {
         val task = Task(
@@ -53,6 +55,34 @@ class TaskRepositoryImpl @Inject constructor(
             targetDate = request.targetDate,
         )
         taskDao.insert(task)
+    }
+
+    override suspend fun getTaskEdit(uid: Int): Result<GetTaskEditResponse?> =
+        withContext(Dispatchers.IO) {
+            runCatching {
+                taskDao.getEdit(uid = uid)?.let {
+                    GetTaskEditResponse(
+                        uid = it.uid,
+                        title = it.title,
+                        progressPercent = it.progressPercent,
+                        targetDate = it.targetDate,
+                    )
+                }
+            }
+        }
+
+    override suspend fun update(
+        uid: Int,
+        title: String,
+        progressPercent: Float,
+        targetDate: Long?
+    ): Result<Unit> = runCatching {
+        taskDao.update(
+            uid = uid,
+            title = title,
+            progressPercent = progressPercent,
+            targetDate = targetDate,
+        )
     }
 
     override suspend fun delete(uid: Int): Result<Unit> = runCatching {
