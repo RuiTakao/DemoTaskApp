@@ -37,7 +37,7 @@ class TaskDetailViewModel @Inject constructor(
                     _uiState.value = TasKDetailUiState.Success(it)
                 },
                 onFailure = { e ->
-                    Log.e(TAG, "getTask failed", e)
+                    Log.e(TAG, "getTaskDetail failed", e)
                     _uiState.value = TasKDetailUiState.Error(e.message)
                 }
             )

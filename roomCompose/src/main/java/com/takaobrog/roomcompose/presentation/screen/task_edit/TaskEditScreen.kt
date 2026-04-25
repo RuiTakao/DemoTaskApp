@@ -2,6 +2,7 @@ package com.takaobrog.roomcompose.presentation.screen.task_edit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -19,9 +20,11 @@ import com.takaobrog.roomcompose.presentation.component.DefaultTopAppBarBack
 import com.takaobrog.roomcompose.presentation.component.DropdownMenuField
 import com.takaobrog.roomcompose.presentation.component.InputTextField
 import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditEvent
+import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditFormState
 
 @Composable
 fun TaskEditScreen(
+    formState: TaskEditFormState,
     onEvent: (TaskEditEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -38,13 +41,13 @@ fun TaskEditScreen(
     ) { paddingValues ->
         Column(modifier = modifier.padding(paddingValues)) {
             InputTextField(
-                label = stringResource(id = R.string.task_create_form_title),
-                value = "",
-                onValueChange = { },
+                label = stringResource(id = R.string.task_edit_form_title),
+                value = formState.title,
+                onValueChange = { onEvent(TaskEditEvent.OnValueChangeTitle(title = it)) },
             )
 
             DropdownMenuField(
-                label = stringResource(id = R.string.task_create_form_progress_percent),
+                label = stringResource(id = R.string.task_edit_form_progress_percent),
                 value = "",
                 onValueChange = {
 
@@ -52,16 +55,23 @@ fun TaskEditScreen(
             )
 
             DateInputField(
-                label = stringResource(id = R.string.task_create_form_target_date),
-                value = "",
-                onValueChange = { },
+                label = stringResource(id = R.string.task_edit_form_target_date),
+                value = formState.formatTargetDate,
+                onValueChange = { onEvent(TaskEditEvent.OnValueChangeTargetDate(targetDate = it)) },
             )
 
-            DefaultButton(
-                text = stringResource(id = R.string.task_create_form_submit),
-                onClick = { },
-                modifier = Modifier.padding(top = 16.dp),
-            )
+            Row {
+                DefaultButton(
+                    text = stringResource(id = R.string.task_edit_form_submit_ok),
+                    onClick = { },
+                    modifier = Modifier.padding(top = 16.dp),
+                )
+                DefaultButton(
+                    text = stringResource(id = R.string.task_edit_form_submit_cancel),
+                    onClick = { onEvent(TaskEditEvent.OnBackEvent) },
+                    modifier = Modifier.padding(top = 16.dp),
+                )
+            }
         }
     }
 }
@@ -69,5 +79,5 @@ fun TaskEditScreen(
 @Preview
 @Composable
 fun TaskEditScreen_Preview() {
-    TaskEditScreen(onEvent = {})
+//    TaskEditScreen(onEvent = {})
 }
