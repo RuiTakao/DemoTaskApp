@@ -1,5 +1,6 @@
-package com.takaobrog.roomcompose.presentation.component.progress_percent
+package com.takaobrog.roomcompose.presentation.component
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
@@ -11,7 +12,15 @@ import androidx.compose.ui.unit.dp
 import com.takaobrog.roomcompose.R
 
 @Composable
-fun ProgressPercent(progressPercent: Float, modifier: Modifier = Modifier) {
+fun ProgressPercentItem(label: String, progressPercent: Float) {
+    Row {
+        DefaultText(text = "$label: ")
+        ProgressPercent(progressPercent = progressPercent)
+    }
+}
+
+@Composable
+private fun ProgressPercent(progressPercent: Float, modifier: Modifier = Modifier) {
     LinearProgressIndicator(
         progress = { progressPercent },
         modifier = modifier
@@ -24,18 +33,18 @@ fun ProgressPercent(progressPercent: Float, modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun ProgressPercent_Preview() {
-    ProgressPercent(progressPercent = 0.3f)
+fun ProgressPercentView_Preview() {
+    ProgressPercentItem(label = "進捗", progressPercent = 0.3f)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ProgressPercent_Preview_Min() {
-    ProgressPercent(progressPercent = 0f)
+fun ProgressPercentView_Preview_Min() {
+    ProgressPercentItem(label = "進捗", progressPercent = 0f)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ProgressPercent_Preview_Max() {
-    ProgressPercent(progressPercent = 1f)
+fun ProgressPercentView_Preview_Max() {
+    ProgressPercentItem(label = "進捗", progressPercent = 1f)
 }

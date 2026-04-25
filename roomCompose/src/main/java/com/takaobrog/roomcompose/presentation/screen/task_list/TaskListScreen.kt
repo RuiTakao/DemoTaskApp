@@ -75,26 +75,26 @@ fun ListView(list: List<TaskListUiModel>, onEvent: (TaskListEvent) -> Unit) {
 
 @Preview
 @Composable
-fun TaskListScreenPreview(modifier: Modifier = Modifier) {
+fun TaskListScreen_Preview(modifier: Modifier = Modifier) {
     val list = listOf<TaskListUiModel>(
         TaskListUiModel(
             uid = 1,
             title = "Room学習",
-            progressPercent = .7f,
-            targetDate = null,
+            progressPercent = 0f,
+            targetDate = "2026/4/30",
             isTargetDateOver = false,
         ),
         TaskListUiModel(
             uid = 2,
             title = "Firebase学習",
-            progressPercent = .7f,
-            targetDate = null,
-            isTargetDateOver = false,
+            progressPercent = 0.7f,
+            targetDate = "2026/4/12",
+            isTargetDateOver = true,
         ),
         TaskListUiModel(
             uid = 3,
             title = "Api学習",
-            progressPercent = .7f,
+            progressPercent = 1f,
             targetDate = null,
             isTargetDateOver = false,
         ),
@@ -107,7 +107,7 @@ fun TaskListScreenPreview(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun TaskListScreenPreviewEmpty(modifier: Modifier = Modifier) {
+fun TaskListScreen_Preview_Empty(modifier: Modifier = Modifier) {
     val state = TaskListUiState.Success(emptyList())
     TaskListScreen(state = state, onEvent = {}, modifier = modifier)
 }

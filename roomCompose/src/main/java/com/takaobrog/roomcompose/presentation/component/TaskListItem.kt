@@ -3,7 +3,6 @@ package com.takaobrog.roomcompose.presentation.component
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,13 +12,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.takaobrog.roomcompose.R
-import com.takaobrog.roomcompose.presentation.component.progress_percent.ProgressPercentItem
 
 @Composable
 fun TaskListItem(
@@ -47,11 +44,7 @@ private fun TitleView(title: String, isTargetDateOver: Boolean) {
     DefaultText(
         text = title,
         modifier = Modifier
-            .padding(
-                start = dimensionResource(id = R.dimen.task_list_item_padding),
-                top = dimensionResource(id = R.dimen.task_list_item_padding),
-                bottom = 8.dp,
-            ),
+            .padding(start = 16.dp, top = 16.dp, bottom = 8.dp),
         color = if (!isTargetDateOver) Color.Black else Color.Red,
         fontWeight = FontWeight.Bold
     )
@@ -63,11 +56,7 @@ private fun DetailView(progressPercent: Float, targetDate: String?) {
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Color.LightGray)
-            .padding(
-                start = dimensionResource(id = R.dimen.task_list_item_padding),
-                top = 10.dp,
-                bottom = dimensionResource(id = R.dimen.task_list_item_padding),
-            )
+            .padding(start = 16.dp, top = 10.dp, bottom = 16.dp)
     ) {
         ProgressPercentItem(
             label = stringResource(id = R.string.task_list_item_progress_percent_label),
@@ -77,39 +66,50 @@ private fun DetailView(progressPercent: Float, targetDate: String?) {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun TaskListItemPreview() {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        TaskListItem(
-            title = "Room学習",
-            progressPercent = .3f,
-            targetDate = "4/5 12:00",
-            isTargetDateOver = false,
-            onItemClick = {},
-        )
-        TaskListItem(
-            title = "Firebase学習",
-            progressPercent = .7f,
-            targetDate = "4/1 9:00",
-            isTargetDateOver = true,
-            onItemClick = {},
-        )
-        TaskListItem(
-            title = "Firebase学習",
-            progressPercent = 1f,
-            targetDate = "4/1 9:00",
-            isTargetDateOver = true,
-            onItemClick = {},
-        )
-        TaskListItem(
-            title = "Api学習",
-            progressPercent = .0f,
-            targetDate = null,
-            isTargetDateOver = false,
-            onItemClick = {},
-        )
-    }
+fun TaskListItem_Preview() {
+    TaskListItem(
+        title = "Room学習",
+        progressPercent = .3f,
+        targetDate = "4/5 12:00",
+        isTargetDateOver = false,
+        onItemClick = {},
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TaskListItem_Preview_IsTargetDateOver() {
+    TaskListItem(
+        title = "Firebase学習",
+        progressPercent = .7f,
+        targetDate = "4/1 9:00",
+        isTargetDateOver = true,
+        onItemClick = {},
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TaskListItem_Preview_Max() {
+    TaskListItem(
+        title = "Firebase学習",
+        progressPercent = 1f,
+        targetDate = "4/1 9:00",
+        isTargetDateOver = true,
+        onItemClick = {},
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TaskListItem_Preview_Min() {
+    TaskListItem(
+        title = "Api学習",
+        progressPercent = .0f,
+        targetDate = null,
+        isTargetDateOver = false,
+        onItemClick = {},
+    )
 }

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.takaobrog.roomcompose.R
 import com.takaobrog.roomcompose.presentation.component.DefaultText
 import com.takaobrog.roomcompose.presentation.component.DefaultTopAppBarBack
-import com.takaobrog.roomcompose.presentation.component.progress_percent.ProgressPercentItem
+import com.takaobrog.roomcompose.presentation.component.ProgressPercentItem
 import com.takaobrog.roomcompose.presentation.component.TargetDateText
 import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TasKDetailUiState
 import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TaskDetailEvent

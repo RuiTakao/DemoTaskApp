@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import com.takaobrog.roomcompose.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,4 +37,10 @@ fun DefaultTopAppBarBack(
         },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.LightGray)
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultTopAppBarBack_Preview() {
+    DefaultTopAppBarBack(onClick = {}, title = "タスク作成")
 }
