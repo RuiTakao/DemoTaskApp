@@ -75,13 +75,15 @@ class TaskRepositoryImpl @Inject constructor(
         uid: Int,
         title: String,
         progressPercent: Float,
-        targetDate: Long?
+        targetDate: Long?,
+        updatedAt: String,
     ): Result<Unit> = runCatching {
         taskDao.update(
             uid = uid,
             title = title,
             progressPercent = progressPercent,
             targetDate = targetDate,
+            updatedAt = updatedAt,
         )
     }
 
