@@ -9,8 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.takaobrog.roomcompose.R
 import com.takaobrog.roomcompose.presentation.component.DefaultTopAppBarBack
+import com.takaobrog.roomcompose.presentation.component.ProgressPercentStatus
 import com.takaobrog.roomcompose.presentation.component.TaskCreateForm
 import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateEvent
 import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateFormState
@@ -39,4 +41,23 @@ fun TaskCreateScreen(
             modifier = Modifier.padding(paddingValues = paddingValues),
         )
     }
+}
+
+@Preview
+@Composable
+fun TaskCreateScreen_Preview() {
+    val formState = TaskCreateFormState(
+        title = "Room学習",
+        progressPercent = ProgressPercentStatus.THREE,
+        targetDate = 1775962688,
+        formatTargetDate = "2026/4/12"
+    )
+    TaskCreateScreen(formState = formState, onEvent = {})
+}
+
+@Preview
+@Composable
+fun TaskCreateScreen_Preview_Empty() {
+    val formState = TaskCreateFormState()
+    TaskCreateScreen(formState = formState, onEvent = {})
 }
