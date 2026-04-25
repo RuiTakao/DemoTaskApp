@@ -40,7 +40,9 @@ fun NavGraphBuilder.taskEditRoute(navController: NavHostController) {
                         title = event.title
                     )
 
-                    is TaskEditEvent.OnValueChangeProgressPercent -> {}
+                    is TaskEditEvent.OnValueChangeProgressPercent -> viewModel.inputProgressPercent(
+                        progressPercent = event.progressPercent
+                    )
 
                     is TaskEditEvent.OnValueChangeTargetDate -> viewModel.inputTargetDate(
                         targetDate = event.targetDate

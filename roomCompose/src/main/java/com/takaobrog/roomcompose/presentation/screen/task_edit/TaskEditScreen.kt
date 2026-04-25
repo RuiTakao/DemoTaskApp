@@ -48,10 +48,8 @@ fun TaskEditScreen(
 
             DropdownMenuField(
                 label = stringResource(id = R.string.task_edit_form_progress_percent),
-                value = "",
-                onValueChange = {
-
-                }
+                value = formState.progressPercent.label,
+                onValueChange = { onEvent(TaskEditEvent.OnValueChangeProgressPercent(progressPercent = it)) }
             )
 
             DateInputField(
