@@ -67,7 +67,8 @@ fun TaskCreateForm_Preview_InValue() {
         formState = TaskCreateFormState(
             title = "Room学習",
             progressPercent = ProgressPercentStatus.SIX,
-            formatTargetDate = "2026/4/12"
+            targetDate = 1775962688,
+            formatTargetDate = "2026/4/12",
         ),
         onEvent = {}
     )
