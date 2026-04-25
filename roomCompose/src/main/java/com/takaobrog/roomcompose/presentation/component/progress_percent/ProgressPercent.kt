@@ -1,0 +1,41 @@
+package com.takaobrog.roomcompose.presentation.component.progress_percent
+
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.takaobrog.roomcompose.R
+
+@Composable
+fun ProgressPercent(progressPercent: Float, modifier: Modifier = Modifier) {
+    LinearProgressIndicator(
+        progress = { progressPercent },
+        modifier = modifier
+            .height(height = 16.dp)
+            .padding(start = 4.dp),
+        color = colorResource(id = R.color.percent_progress_color),
+        trackColor = colorResource(id = R.color.percent_progress_track_color),
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProgressPercent_Preview() {
+    ProgressPercent(progressPercent = 0.3f)
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProgressPercent_Preview_Min() {
+    ProgressPercent(progressPercent = 0f)
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProgressPercent_Preview_Max() {
+    ProgressPercent(progressPercent = 1f)
+}
