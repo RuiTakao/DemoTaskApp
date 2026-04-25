@@ -16,6 +16,7 @@ interface TaskRepository {
         title: String,
         progressPercent: Float,
         targetDate: Long?,
+        updatedAt: String,
     ): Result<Unit>
 
     suspend fun delete(uid: Int): Result<Unit>
