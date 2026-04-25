@@ -5,6 +5,7 @@ import com.takaobrog.roomcompose.data.model.Task
 import com.takaobrog.roomcompose.domain.model.CreateTaskRequest
 import com.takaobrog.roomcompose.domain.model.GetTaskListResponse
 import com.takaobrog.roomcompose.domain.model.GetTaskDetailResponse
+import com.takaobrog.roomcompose.domain.model.GetTaskEditResponse
 import com.takaobrog.roomcompose.domain.repository.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -54,6 +55,20 @@ class TaskRepositoryImpl @Inject constructor(
         )
         taskDao.insert(task)
     }
+
+    override suspend fun getTaskEdit(uid: Int): Result<GetTaskEditResponse?> =
+        withContext(Dispatchers.IO) {
+            runCatching {
+                taskDao.getTask(uid = uid)?.let {
+                    GetTaskEditResponse(
+                        uid = it.uid,
+                        title = it.title,
+                        progressPercent = it.progressPercent,
+                        targetDate = it.targetDate,
+                    )
+                }
+            }
+        }
 
     override suspend fun delete(uid: Int): Result<Unit> = runCatching {
         taskDao.delete(uid = uid)
