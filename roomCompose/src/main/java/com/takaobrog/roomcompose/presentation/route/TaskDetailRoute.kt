@@ -34,7 +34,10 @@ fun NavGraphBuilder.taskDetailRoute(navController: NavHostController) {
             state = state,
             onEvent = { event ->
                 when (event) {
-                    is TaskDetailEvent.OnDeleteTaskEvent -> viewModel.delete()
+                    TaskDetailEvent.OnDeleteTaskEvent -> viewModel.delete()
+
+                    is TaskDetailEvent.OnEditTaskEvent ->
+                        navController.navigate(route = ScreenRoute.TaskEdit.route + "/${event.uid}")
 
                     TaskDetailEvent.OnBackEvent -> navController.popBackStack()
                 }

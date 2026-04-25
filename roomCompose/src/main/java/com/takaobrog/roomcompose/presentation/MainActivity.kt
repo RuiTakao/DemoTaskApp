@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.takaobrog.roomcompose.presentation.route.ScreenRoute
 import com.takaobrog.roomcompose.presentation.route.taskCreateRoute
 import com.takaobrog.roomcompose.presentation.route.taskDetailRoute
+import com.takaobrog.roomcompose.presentation.route.taskEditRoute
 import com.takaobrog.roomcompose.presentation.route.taskListRoute
 import com.takaobrog.roomcompose.presentation.ui.theme.DemoTaskAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +29,7 @@ class MainActivity : ComponentActivity() {
                     taskListRoute(navController = navController)
                     taskCreateRoute(navController = navController)
                     taskDetailRoute(navController = navController)
+                    taskEditRoute(navController = navController)
                 }
             }
         }

@@ -51,7 +51,11 @@ fun TaskDetailScreen(
                     )
                     // TODO スタブ
                     Button(onClick = { onEvent(TaskDetailEvent.OnDeleteTaskEvent) }) {
-                        Text(state.item.title)
+                        Text(text = "削除")
+                    }
+                    // TODO スタブ
+                    Button(onClick = { onEvent(TaskDetailEvent.OnEditTaskEvent(uid = state.item.uid)) }) {
+                        Text(text = "編集")
                     }
                 }
 
