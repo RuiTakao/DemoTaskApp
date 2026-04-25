@@ -4,7 +4,7 @@ import com.takaobrog.roomcompose.data.dao.TaskDao
 import com.takaobrog.roomcompose.data.model.Task
 import com.takaobrog.roomcompose.domain.model.CreateTaskRequest
 import com.takaobrog.roomcompose.domain.model.GetTaskListResponse
-import com.takaobrog.roomcompose.domain.model.GetTaskResponse
+import com.takaobrog.roomcompose.domain.model.GetTaskDetailResponse
 import com.takaobrog.roomcompose.domain.repository.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -31,11 +31,11 @@ class TaskRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun getTaskDetail(uid: Int): Result<GetTaskResponse?> =
+    override suspend fun getTaskDetail(uid: Int): Result<GetTaskDetailResponse?> =
         withContext(Dispatchers.IO) {
             runCatching {
                 taskDao.getTask(uid = uid)?.let {
-                    GetTaskResponse(
+                    GetTaskDetailResponse(
                         uid = it.uid,
                         title = it.title,
                         progressPercent = it.progressPercent,
