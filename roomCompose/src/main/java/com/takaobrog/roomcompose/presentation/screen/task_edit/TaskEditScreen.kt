@@ -17,7 +17,7 @@ import com.takaobrog.roomcompose.R
 import com.takaobrog.roomcompose.presentation.component.DateInputField
 import com.takaobrog.roomcompose.presentation.component.DefaultButton
 import com.takaobrog.roomcompose.presentation.component.DefaultTopAppBarBack
-import com.takaobrog.roomcompose.presentation.component.DropdownMenuField
+import com.takaobrog.roomcompose.presentation.component.ProgressPercentInputField
 import com.takaobrog.roomcompose.presentation.component.InputTextField
 import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditEvent
 import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditFormState
@@ -46,7 +46,7 @@ fun TaskEditScreen(
                 onValueChange = { onEvent(TaskEditEvent.OnValueChangeTitle(title = it)) },
             )
 
-            DropdownMenuField(
+            ProgressPercentInputField(
                 label = stringResource(id = R.string.task_edit_form_progress_percent),
                 value = formState.progressPercent.label,
                 onValueChange = { onEvent(TaskEditEvent.OnValueChangeProgressPercent(progressPercent = it)) }

@@ -38,7 +38,7 @@ enum class ProgressPercentStatus(val label: String, val data: Float) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropdownMenuField(
+fun ProgressPercentInputField(
     label: String,
     value: String,
     onValueChange: (ProgressPercentStatus) -> Unit,
@@ -83,7 +83,7 @@ fun DropdownMenuField(
 @Preview
 @Composable
 fun DropdownMenuField_Preview() {
-    DropdownMenuField(
+    ProgressPercentInputField(
         label = "進捗",
         value = ProgressPercentStatus.MAX.label,
         onValueChange = {},
