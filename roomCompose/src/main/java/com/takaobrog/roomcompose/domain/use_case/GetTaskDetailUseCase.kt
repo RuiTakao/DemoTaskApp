@@ -22,6 +22,7 @@ class GetTaskDetailUseCase @Inject constructor(
                     TaskDetailUiModel(
                         uid = task.uid,
                         title = task.title,
+                        comment = task.comment,
                         progressPercent = task.progressPercent,
                         targetDate = targetDate,
                         isTargetDateOver = isTargetDateOver,

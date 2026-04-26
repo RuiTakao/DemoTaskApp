@@ -46,6 +46,7 @@ fun TaskDetailScreen(
                 is TasKDetailUiState.Success -> {
                     DetailView(
                         title = state.item.title,
+                        comment = state.item.comment,
                         progressPercent = state.item.progressPercent,
                         targetDate = state.item.targetDate,
                     )
@@ -68,6 +69,7 @@ fun TaskDetailScreen(
 @Composable
 fun DetailView(
     title: String,
+    comment: String,
     modifier: Modifier = Modifier,
     progressPercent: Float = 0f,
     targetDate: String? = null,
@@ -81,6 +83,7 @@ fun DetailView(
             progressPercent = progressPercent,
         )
         TargetDateText(targetDate, modifier = Modifier.padding(top = 8.dp))
+        DefaultText(text = comment)
     }
 }
 
@@ -89,7 +92,8 @@ fun DetailView(
 fun DetailView_Preview() {
     Column(Modifier.background(Color.White)) {
         DetailView(
-            title = "Room学習"
+            title = "Room学習",
+            comment = "Room学習1"
         )
     }
 }

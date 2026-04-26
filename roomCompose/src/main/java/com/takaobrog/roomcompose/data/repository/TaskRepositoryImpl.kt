@@ -41,6 +41,7 @@ class TaskRepositoryImpl @Inject constructor(
                     GetTaskDetailResponse(
                         uid = it.uid,
                         title = it.title,
+                        comment = it.comment,
                         progressPercent = it.progressPercent,
                         targetDate = it.targetDate,
                     )
