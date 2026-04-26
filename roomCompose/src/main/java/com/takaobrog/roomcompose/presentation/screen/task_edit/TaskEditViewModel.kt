@@ -76,6 +76,7 @@ class TaskEditViewModel @Inject constructor(
             updateUseCase(
                 uid = uid,
                 title = _formState.value.title,
+                comment = "",
                 progressPercent = _formState.value.progressPercent.data,
                 targetDate = _formState.value.targetDate,
             )

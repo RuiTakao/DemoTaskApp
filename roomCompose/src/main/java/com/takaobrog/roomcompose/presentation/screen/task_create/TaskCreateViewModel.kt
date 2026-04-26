@@ -44,6 +44,7 @@ class TaskCreateViewModel @Inject constructor(
         viewModelScope.launch {
             createUseCase(
                 title = _formState.value.title,
+                comment = "",
                 progressPercent = _formState.value.progressPercent.data,
                 targetDate = _formState.value.targetDate,
             )

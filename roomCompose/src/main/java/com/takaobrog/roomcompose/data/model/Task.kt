@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class Task(
     @PrimaryKey(autoGenerate = true) val uid: Int = 0,
     @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "comment") val comment: String,
     @ColumnInfo(name = "progressPercent") val progressPercent: Float,
     @ColumnInfo(name = "createdAt") val createdAt: String,
     @ColumnInfo(name = "targetDate") val targetDate: Long? = null,
