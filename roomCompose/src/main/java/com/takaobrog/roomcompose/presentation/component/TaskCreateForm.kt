@@ -44,7 +44,7 @@ fun TaskCreateForm(
         )
 
         InputTextAreaField(
-            label = stringResource(id = R.string.task_edit_form_comment),
+            label = stringResource(id = R.string.task_create_form_comment),
             value = formState.comment,
             onValueChange = { onEvent(TaskCreateEvent.OnValueChangeComment(comment = it)) },
         )

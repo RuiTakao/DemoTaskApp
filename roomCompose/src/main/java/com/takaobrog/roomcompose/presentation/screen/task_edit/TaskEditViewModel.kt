@@ -44,6 +44,7 @@ class TaskEditViewModel @Inject constructor(
                     val progressPercent = ProgressPercentStatus.formData(value = it.progressPercent)
                     _formState.value = TaskEditFormState(
                         title = it.title,
+                        comment = it.comment,
                         progressPercent = progressPercent ?: ProgressPercentStatus.ZERO,
                         targetDate = it.targetDate,
                         formatTargetDate = formatTargetDate(targetDate = it.targetDate),
@@ -61,6 +62,10 @@ class TaskEditViewModel @Inject constructor(
         _formState.value = _formState.value.copy(title = title)
     }
 
+    fun inputComment(comment: String) {
+        _formState.value = _formState.value.copy(comment = comment)
+    }
+
     fun inputProgressPercent(progressPercent: ProgressPercentStatus) {
         _formState.value = _formState.value.copy(progressPercent = progressPercent)
     }
@@ -76,7 +81,7 @@ class TaskEditViewModel @Inject constructor(
             updateUseCase(
                 uid = uid,
                 title = _formState.value.title,
-                comment = "",
+                comment = _formState.value.comment,
                 progressPercent = _formState.value.progressPercent.data,
                 targetDate = _formState.value.targetDate,
             )

@@ -37,6 +37,12 @@ fun TaskEditForm(
             onValueChange = { onEvent(TaskEditEvent.OnValueChangeTargetDate(targetDate = it)) },
         )
 
+        InputTextAreaField(
+            label = stringResource(id = R.string.task_edit_form_comment),
+            value = formState.comment,
+            onValueChange = { onEvent(TaskEditEvent.OnValueChangeComment(comment = it)) },
+        )
+
         Row {
             DefaultButton(
                 text = stringResource(id = R.string.task_edit_form_submit_ok),
