@@ -25,18 +25,6 @@ fun TaskCreateForm(
             onValueChange = { onEvent(TaskCreateEvent.OnValueChangeTitle(title = it)) },
         )
 
-        ProgressPercentInputField(
-            label = stringResource(id = R.string.task_create_form_progress_percent),
-            value = formState.progressPercent.label,
-            onValueChange = {
-                onEvent(
-                    TaskCreateEvent.OnValueChangeProgressPercent(
-                        progressPercent = it
-                    )
-                )
-            }
-        )
-
         DateInputField(
             label = stringResource(id = R.string.task_create_form_target_date),
             value = formState.formatTargetDate,
@@ -72,7 +60,7 @@ fun TaskCreateForm_Preview_InValue() {
     TaskCreateForm(
         formState = TaskCreateFormState(
             title = "Room学習",
-            progressPercent = ProgressPercentStatus.SIX,
+            comment = "Dao作成完了",
             targetDate = 1775962688,
             formatTargetDate = "2026/4/12",
         ),
