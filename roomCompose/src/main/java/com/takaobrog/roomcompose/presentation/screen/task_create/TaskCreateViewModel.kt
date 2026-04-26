@@ -30,6 +30,10 @@ class TaskCreateViewModel @Inject constructor(
         _formState.value = _formState.value.copy(title = title)
     }
 
+    fun inputComment(comment: String) {
+        _formState.value = _formState.value.copy(comment = comment)
+    }
+
     fun inputProgressPercent(progressPercent: ProgressPercentStatus) {
         _formState.value = _formState.value.copy(progressPercent = progressPercent)
     }
@@ -44,7 +48,7 @@ class TaskCreateViewModel @Inject constructor(
         viewModelScope.launch {
             createUseCase(
                 title = _formState.value.title,
-                comment = "",
+                comment = _formState.value.comment,
                 progressPercent = _formState.value.progressPercent.data,
                 targetDate = _formState.value.targetDate,
             )
