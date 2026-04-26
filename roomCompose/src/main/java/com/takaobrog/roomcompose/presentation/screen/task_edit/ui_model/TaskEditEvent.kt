@@ -7,6 +7,8 @@ sealed class TaskEditEvent {
 
     data class OnValueChangeTitle(val title: String) : TaskEditEvent()
 
+    data class OnValueChangeComment(val comment: String) : TaskEditEvent()
+
     data class OnValueChangeProgressPercent(val progressPercent: ProgressPercentStatus) :
         TaskEditEvent()
 

@@ -1,10 +1,10 @@
 package com.takaobrog.roomcompose.domain.model
 
-class TaskDetailUiModel(
+data class UpdateTaskEditRequest(
     val uid: Int,
     val title: String,
     val comment: String,
     val progressPercent: Float,
-    val targetDate: String?,
-    val isTargetDateOver: Boolean,
+    val targetDate: Long?,
+    val updatedAt: String,
 )

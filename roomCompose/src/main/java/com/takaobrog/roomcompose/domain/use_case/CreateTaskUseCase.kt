@@ -9,10 +9,16 @@ class CreateTaskUseCase @Inject constructor(
     private val repository: TaskRepository,
     private val timeProvider: TimeProvider,
 ) {
-    suspend operator fun invoke(title: String, progressPercent: Float, targetDate: Long?) {
+    suspend operator fun invoke(
+        title: String,
+        comment: String,
+        progressPercent: Float,
+        targetDate: Long?
+    ) {
         val createdAt = timeProvider.getNow()
         val request = CreateTaskRequest(
             title = title,
+            comment = comment,
             progressPercent = progressPercent,
             targetDate = targetDate,
             createdAt = createdAt

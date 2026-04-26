@@ -7,6 +7,8 @@ sealed class TaskCreateEvent {
 
     data class OnValueChangeTitle(val title: String) : TaskCreateEvent()
 
+    data class OnValueChangeComment(val comment: String) : TaskCreateEvent()
+
     data class OnValueChangeProgressPercent(val progressPercent: ProgressPercentStatus) :
         TaskCreateEvent()
 

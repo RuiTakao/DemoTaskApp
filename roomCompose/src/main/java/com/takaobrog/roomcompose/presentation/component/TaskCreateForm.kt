@@ -43,6 +43,12 @@ fun TaskCreateForm(
             onValueChange = { onEvent(TaskCreateEvent.OnValueChangeTargetDate(targetDate = it)) },
         )
 
+        InputTextAreaField(
+            label = stringResource(id = R.string.task_create_form_comment),
+            value = formState.comment,
+            onValueChange = { onEvent(TaskCreateEvent.OnValueChangeComment(comment = it)) },
+        )
+
         DefaultButton(
             text = stringResource(id = R.string.task_create_form_submit),
             onClick = { onEvent(TaskCreateEvent.OnSubmit) },

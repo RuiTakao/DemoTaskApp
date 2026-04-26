@@ -6,6 +6,7 @@ import com.takaobrog.roomcompose.domain.model.CreateTaskRequest
 import com.takaobrog.roomcompose.domain.model.GetTaskListResponse
 import com.takaobrog.roomcompose.domain.model.GetTaskDetailResponse
 import com.takaobrog.roomcompose.domain.model.GetTaskEditResponse
+import com.takaobrog.roomcompose.domain.model.UpdateTaskEditRequest
 import com.takaobrog.roomcompose.domain.repository.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -40,6 +41,7 @@ class TaskRepositoryImpl @Inject constructor(
                     GetTaskDetailResponse(
                         uid = it.uid,
                         title = it.title,
+                        comment = it.comment,
                         progressPercent = it.progressPercent,
                         targetDate = it.targetDate,
                     )
@@ -50,6 +52,7 @@ class TaskRepositoryImpl @Inject constructor(
     override suspend fun create(request: CreateTaskRequest): Result<Unit> = runCatching {
         val task = Task(
             title = request.title,
+            comment = request.comment,
             progressPercent = request.progressPercent,
             createdAt = request.createdAt,
             targetDate = request.targetDate,
@@ -64,6 +67,7 @@ class TaskRepositoryImpl @Inject constructor(
                     GetTaskEditResponse(
                         uid = it.uid,
                         title = it.title,
+                        comment = it.comment,
                         progressPercent = it.progressPercent,
                         targetDate = it.targetDate,
                     )
@@ -72,18 +76,15 @@ class TaskRepositoryImpl @Inject constructor(
         }
 
     override suspend fun update(
-        uid: Int,
-        title: String,
-        progressPercent: Float,
-        targetDate: Long?,
-        updatedAt: String,
+        request: UpdateTaskEditRequest
     ): Result<Unit> = runCatching {
         taskDao.update(
-            uid = uid,
-            title = title,
-            progressPercent = progressPercent,
-            targetDate = targetDate,
-            updatedAt = updatedAt,
+            uid = request.uid,
+            title = request.title,
+            comment = request.comment,
+            progressPercent = request.progressPercent,
+            targetDate = request.targetDate,
+            updatedAt = request.updatedAt,
         )
     }
 

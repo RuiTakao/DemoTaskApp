@@ -4,6 +4,7 @@ import com.takaobrog.roomcompose.presentation.component.ProgressPercentStatus
 
 data class TaskCreateFormState(
     val title: String = "",
+    val comment: String = "",
     val progressPercent: ProgressPercentStatus = ProgressPercentStatus.ZERO,
     val targetDate: Long? = null,
     val formatTargetDate: String = "",

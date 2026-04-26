@@ -24,6 +24,7 @@ interface TaskDao {
         "" +
                 "UPDATE task " +
                 "SET title =:title, " +
+                "comment = :comment, " +
                 "progressPercent =:progressPercent, " +
                 "targetDate =:targetDate, " +
                 "updatedAt =:updatedAt " +
@@ -33,6 +34,7 @@ interface TaskDao {
     suspend fun update(
         uid: Int,
         title: String,
+        comment: String,
         progressPercent: Float,
         targetDate: Long?,
         updatedAt: String
