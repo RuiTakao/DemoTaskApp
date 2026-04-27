@@ -19,6 +19,8 @@
     <string name="task_edit_form_comment">コメント</string>
     <string name="task_edit_form_submit_ok">OK</string>
     <string name="task_edit_form_submit_cancel">キャンセル</string>
+    <!-- タスク詳細 -->
+    <string name="task_detail_delete_confirm_message">削除しますか？</string>
     <!-- TopAppBar -->
     <string name="back_button_description">戻る</string>
 </resources>

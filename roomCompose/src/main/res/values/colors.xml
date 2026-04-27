@@ -10,4 +10,5 @@
     <color name="fab_icon_color">#FFFFFFFF</color>
     <color name="percent_progress_color">#FF00FF00</color>
     <color name="percent_progress_track_color">#FF333333</color>
+    <color name="danger">#FFFF0000</color>
 </resources>
