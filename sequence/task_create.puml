@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+Content --> Success : onSubmit
+Content --> Error : onSubmit
+Success --> PreviousPage
+ValidError --> Success : onSubmit
+NetWorkError --> Content : OK
+SystemError --> Content : OK
+state Content
+state Error {
+    state ValidError
+    state NetWorkError
+    state SystemError
+}
+@enduml
