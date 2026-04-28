@@ -7,28 +7,30 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.takaobrog.roomcompose.R
 
 @Composable
-fun ProgressPercentItem(label: String, progressPercent: Float) {
-    Row {
-        DefaultText(text = "$label: ")
-        ProgressPercent(progressPercent = progressPercent)
+fun ProgressPercentItem(
+    label: String,
+    progressPercent: Float,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+    ) {
+        DefaultText(text = "$label: ", fontWeight = FontWeight.Bold)
+        LinearProgressIndicator(
+            progress = { progressPercent },
+            modifier = Modifier
+                .height(height = 16.dp)
+                .padding(start = 4.dp),
+            color = colorResource(id = R.color.percent_progress_color),
+            trackColor = colorResource(id = R.color.percent_progress_track_color),
+        )
     }
-}
-
-@Composable
-private fun ProgressPercent(progressPercent: Float, modifier: Modifier = Modifier) {
-    LinearProgressIndicator(
-        progress = { progressPercent },
-        modifier = modifier
-            .height(height = 16.dp)
-            .padding(start = 4.dp),
-        color = colorResource(id = R.color.percent_progress_color),
-        trackColor = colorResource(id = R.color.percent_progress_track_color),
-    )
 }
 
 @Preview(showBackground = true)

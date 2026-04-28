@@ -40,7 +40,10 @@ fun TaskCreateForm(
         DefaultButton(
             text = stringResource(id = R.string.task_create_form_submit),
             onClick = { onEvent(TaskCreateEvent.OnSubmit) },
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+                .padding(horizontal = 16.dp),
         )
     }
 }

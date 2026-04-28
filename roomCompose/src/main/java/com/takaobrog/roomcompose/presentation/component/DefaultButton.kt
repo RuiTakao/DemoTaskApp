@@ -1,6 +1,5 @@
 package com.takaobrog.roomcompose.presentation.component
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -21,7 +20,7 @@ fun DefaultButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.padding(horizontal = 16.dp),
+        modifier = modifier,
         shape = RoundedCornerShape(size = 8.dp),
     ) {
         Text(
