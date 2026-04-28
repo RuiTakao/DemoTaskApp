@@ -31,6 +31,9 @@ class TaskDetailViewModel @Inject constructor(
     private val _effect = MutableSharedFlow<TaskDetailEffect>()
     val effect = _effect.asSharedFlow()
 
+    private val _showDialog = MutableStateFlow<Boolean>(false)
+    val showDialog = _showDialog
+
     init {
         viewModelScope.launch {
             getUseCase(uid = uid)
@@ -42,6 +45,14 @@ class TaskDetailViewModel @Inject constructor(
                     _uiState.value = TasKDetailUiState.Success(item = it)
                 }
         }
+    }
+
+    fun deleteConfirm() {
+        _showDialog.value = true
+    }
+
+    fun onDismiss() {
+        _showDialog.value = false
     }
 
     fun delete() {

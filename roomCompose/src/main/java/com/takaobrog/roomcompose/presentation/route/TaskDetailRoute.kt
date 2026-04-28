@@ -21,6 +21,7 @@ fun NavGraphBuilder.taskDetailRoute(navController: NavHostController) {
     ) {
         val viewModel: TaskDetailViewModel = hiltViewModel()
         val state by viewModel.uiState.collectAsState()
+        val showDialog by viewModel.showDialog.collectAsState()
 
         LaunchedEffect(Unit) {
             viewModel.effect.collect { effect ->
@@ -34,14 +35,19 @@ fun NavGraphBuilder.taskDetailRoute(navController: NavHostController) {
             state = state,
             onEvent = { event ->
                 when (event) {
-                    TaskDetailEvent.OnDeleteTaskEvent -> viewModel.delete()
+                    TaskDetailEvent.OnDeleteConfirmClick -> viewModel.delete()
+
+                    TaskDetailEvent.OnDeleteExecute -> viewModel.deleteConfirm()
+
+                    TaskDetailEvent.OnDeleteDismiss -> viewModel.onDismiss()
 
                     is TaskDetailEvent.OnEditTaskEvent ->
                         navController.navigate(route = ScreenRoute.TaskEdit.route + "/${event.uid}")
 
                     TaskDetailEvent.OnBackEvent -> navController.popBackStack()
                 }
-            }
+            },
+            showDialog = showDialog,
         )
     }
 }

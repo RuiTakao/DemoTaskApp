@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.takaobrog.roomcompose.R
 import com.takaobrog.roomcompose.presentation.component.DefaultText
 import com.takaobrog.roomcompose.presentation.component.DefaultTopAppBarBack
+import com.takaobrog.roomcompose.presentation.component.DeleteDialog
 import com.takaobrog.roomcompose.presentation.component.ProgressPercentItem
 import com.takaobrog.roomcompose.presentation.component.TargetDateText
 import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TasKDetailUiState
@@ -26,6 +27,7 @@ import com.takaobrog.roomcompose.presentation.screen.task_detail.ui_model.TaskDe
 fun TaskDetailScreen(
     state: TasKDetailUiState,
     onEvent: (TaskDetailEvent) -> Unit,
+    showDialog: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -51,13 +53,23 @@ fun TaskDetailScreen(
                         targetDate = state.item.targetDate,
                     )
                     // TODO スタブ
-                    Button(onClick = { onEvent(TaskDetailEvent.OnDeleteTaskEvent) }) {
-                        Text(text = "削除")
-                    }
-                    // TODO スタブ
                     Button(onClick = { onEvent(TaskDetailEvent.OnEditTaskEvent(uid = state.item.uid)) }) {
                         Text(text = "編集")
                     }
+                    // TODO スタブ
+                    Button(onClick = { onEvent(TaskDetailEvent.OnDeleteExecute) }) {
+                        Text(text = "削除")
+                    }
+
+                    DeleteDialog(
+                        showDialog = showDialog,
+                        onDismiss = { onEvent(TaskDetailEvent.OnDeleteDismiss) },
+                        onConfirm = {
+                            onEvent(TaskDetailEvent.OnDeleteDismiss)
+                            onEvent(TaskDetailEvent.OnDeleteConfirmClick)
+                        },
+                        title = stringResource(id = R.string.task_detail_delete_confirm_message),
+                    )
                 }
 
                 is TasKDetailUiState.Error -> {}
