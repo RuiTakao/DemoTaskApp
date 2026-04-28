@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+Loading --> Success
+Loading --> Error
+Success --> TaskCreate : FabClick
+Content --> TaskDetail : ItemClick
+NetWorkError --> Loading : Retry
+NetWorkError --> finish : Cancel
+SystemError --> finish : OK
+Success --> Loading : Retry
+state Success {
+    state Empty
+    state Content
+}
+state Error {
+    state NetWorkError
+    state SystemError
+}
+@enduml
