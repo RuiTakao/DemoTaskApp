@@ -1,25 +1,26 @@
 package com.takaobrog.roomcompose.presentation.component
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.takaobrog.roomcompose.R
 
 @Composable
 fun TargetDateText(targetDate: String?, modifier: Modifier = Modifier) {
-    targetDate?.let {
+    Row(modifier = modifier) {
         DefaultText(
-            text = stringResource(
-                id = R.string.task_list_item_target_date_label,
-                targetDate
-            ),
-            modifier = modifier
+            text = "${stringResource(id = R.string.task_list_item_target_date_label)}: ",
+            fontWeight = FontWeight.Bold,
         )
-    } ?: DefaultText(
-        text = stringResource(id = R.string.task_list_item_target_date_empty),
-        modifier = modifier
-    )
+        targetDate?.let {
+            DefaultText(text = targetDate)
+        } ?: DefaultText(
+            text = stringResource(id = R.string.task_list_item_target_date_empty)
+        )
+    }
 }
 
 @Preview(showBackground = true)

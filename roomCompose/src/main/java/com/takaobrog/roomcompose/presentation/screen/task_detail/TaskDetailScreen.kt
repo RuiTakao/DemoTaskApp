@@ -1,20 +1,22 @@
 package com.takaobrog.roomcompose.presentation.screen.task_detail
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.takaobrog.roomcompose.R
+import com.takaobrog.roomcompose.domain.model.TaskDetailUiModel
+import com.takaobrog.roomcompose.presentation.component.DefaultButton
 import com.takaobrog.roomcompose.presentation.component.DefaultText
 import com.takaobrog.roomcompose.presentation.component.DefaultTopAppBarBack
 import com.takaobrog.roomcompose.presentation.component.DeleteDialog
@@ -33,10 +35,7 @@ fun TaskDetailScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            DefaultTopAppBarBack(
-                onClick = { onEvent(TaskDetailEvent.OnBackEvent) },
-                title = "タスク詳細"
-            )
+            DefaultTopAppBarBack(onClick = { onEvent(TaskDetailEvent.OnBackEvent) })
         },
         contentWindowInsets = WindowInsets.systemBars,
     ) { padding ->
@@ -46,19 +45,42 @@ fun TaskDetailScreen(
             when (state) {
                 TasKDetailUiState.Loading -> {}
                 is TasKDetailUiState.Success -> {
-                    DetailView(
-                        title = state.item.title,
-                        comment = state.item.comment,
-                        progressPercent = state.item.progressPercent,
-                        targetDate = state.item.targetDate,
-                    )
-                    // TODO スタブ
-                    Button(onClick = { onEvent(TaskDetailEvent.OnEditTaskEvent(uid = state.item.uid)) }) {
-                        Text(text = "編集")
-                    }
-                    // TODO スタブ
-                    Button(onClick = { onEvent(TaskDetailEvent.OnDeleteExecute) }) {
-                        Text(text = "削除")
+                    Column(
+                        modifier = modifier
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                    ) {
+                        DefaultText(
+                            text = state.item.title,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        ProgressPercentItem(
+                            label = stringResource(id = R.string.task_list_item_progress_percent_label),
+                            progressPercent = state.item.progressPercent,
+                            modifier = Modifier.padding(top = 16.dp),
+                        )
+                        TargetDateText(
+                            state.item.targetDate,
+                            modifier = Modifier.padding(top = 8.dp),
+                        )
+                        DefaultText(
+                            text = state.item.comment,
+                            modifier = Modifier.padding(top = 8.dp),
+                        )
+                        Row(
+                            Modifier.padding(top = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            DefaultButton(
+                                text = "編集",
+                                onClick = { onEvent(TaskDetailEvent.OnEditTaskEvent(uid = state.item.uid)) }
+                            )
+                            DefaultButton(
+                                text = "削除",
+                                onClick = { onEvent(TaskDetailEvent.OnDeleteExecute) }
+                            )
+                        }
                     }
 
                     DeleteDialog(
@@ -78,34 +100,21 @@ fun TaskDetailScreen(
     }
 }
 
-@Composable
-fun DetailView(
-    title: String,
-    comment: String,
-    modifier: Modifier = Modifier,
-    progressPercent: Float = 0f,
-    targetDate: String? = null,
-) {
-    Column(
-        modifier = modifier
-    ) {
-        DefaultText(text = title)
-        ProgressPercentItem(
-            label = stringResource(id = R.string.task_list_item_progress_percent_label),
-            progressPercent = progressPercent,
-        )
-        TargetDateText(targetDate, modifier = Modifier.padding(top = 8.dp))
-        DefaultText(text = comment)
-    }
-}
-
 @Preview
 @Composable
-fun DetailView_Preview() {
-    Column(Modifier.background(Color.White)) {
-        DetailView(
-            title = "Room学習",
-            comment = "Room学習1"
-        )
-    }
+fun TaskDetailScreen_Preview() {
+    val item = TaskDetailUiModel(
+        uid = 1,
+        title = "Room学習",
+        comment = "Dao作成\nQuery登録",
+        progressPercent = 0.3f,
+        targetDate = "2026/4/28",
+        isTargetDateOver = true,
+    )
+    val state = TasKDetailUiState.Success(item = item)
+    TaskDetailScreen(
+        state = state,
+        onEvent = {},
+        showDialog = false,
+    )
 }

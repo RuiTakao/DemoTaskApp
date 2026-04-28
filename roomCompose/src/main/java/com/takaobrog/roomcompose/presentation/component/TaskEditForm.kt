@@ -1,5 +1,6 @@
 package com.takaobrog.roomcompose.presentation.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -43,16 +44,17 @@ fun TaskEditForm(
             onValueChange = { onEvent(TaskEditEvent.OnValueChangeComment(comment = it)) },
         )
 
-        Row {
+        Row(
+            Modifier.padding(top = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
             DefaultButton(
                 text = stringResource(id = R.string.task_edit_form_submit_ok),
                 onClick = { onEvent(TaskEditEvent.OnSubmit) },
-                modifier = Modifier.padding(top = 16.dp),
             )
             DefaultButton(
                 text = stringResource(id = R.string.task_edit_form_submit_cancel),
                 onClick = { onEvent(TaskEditEvent.OnBackEvent) },
-                modifier = Modifier.padding(top = 16.dp),
             )
         }
     }
