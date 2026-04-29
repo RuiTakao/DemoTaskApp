@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,6 +25,7 @@ fun TaskDetailScreen(
     state: TasKDetailUiState,
     onEvent: (TaskDetailEvent) -> Unit,
     showDialog: Boolean,
+    snackBarHost: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -30,6 +33,7 @@ fun TaskDetailScreen(
         topBar = {
             DefaultTopAppBarBack(onClick = { onEvent(TaskDetailEvent.OnBackEvent) })
         },
+        snackbarHost = { SnackbarHost(hostState =  snackBarHost) },
         contentWindowInsets = WindowInsets.systemBars,
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
@@ -66,40 +70,42 @@ fun TaskDetailScreen(
     }
 }
 
-@Preview
-@Composable
-fun TaskDetailScreen_Preview() {
-    val item = TaskDetailUiModel(
-        uid = 1,
-        title = "Room学習",
-        comment = "Dao作成\nQuery登録",
-        progressPercent = 0.3f,
-        targetDate = "2026/4/28",
-        isTargetDateOver = true,
-    )
-    val state = TasKDetailUiState.Success(item = item)
-    TaskDetailScreen(
-        state = state,
-        onEvent = {},
-        showDialog = false,
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TaskDetailScreen_Preview_Delete_Dialog() {
-    val item = TaskDetailUiModel(
-        uid = 1,
-        title = "Room学習",
-        comment = "Dao作成\nQuery登録",
-        progressPercent = 0.3f,
-        targetDate = "2026/4/28",
-        isTargetDateOver = true,
-    )
-    val state = TasKDetailUiState.Success(item = item)
-    TaskDetailScreen(
-        state = state,
-        onEvent = {},
-        showDialog = true,
-    )
-}
+//@Preview
+//@Composable
+//fun TaskDetailScreen_Preview() {
+//    val item = TaskDetailUiModel(
+//        uid = 1,
+//        title = "Room学習",
+//        comment = "Dao作成\nQuery登録",
+//        progressPercent = 0.3f,
+//        targetDate = "2026/4/28",
+//        isTargetDateOver = true,
+//    )
+//    val state = TasKDetailUiState.Success(item = item)
+//    TaskDetailScreen(
+//        state = state,
+//        onEvent = {},
+//        showDialog = false,
+//        snackBarHost = {},
+//    )
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun TaskDetailScreen_Preview_Delete_Dialog() {
+//    val item = TaskDetailUiModel(
+//        uid = 1,
+//        title = "Room学習",
+//        comment = "Dao作成\nQuery登録",
+//        progressPercent = 0.3f,
+//        targetDate = "2026/4/28",
+//        isTargetDateOver = true,
+//    )
+//    val state = TasKDetailUiState.Success(item = item)
+//    TaskDetailScreen(
+//        state = state,
+//        onEvent = {},
+//        showDialog = true,
+//        snackBarHost = {},
+//    )
+//}

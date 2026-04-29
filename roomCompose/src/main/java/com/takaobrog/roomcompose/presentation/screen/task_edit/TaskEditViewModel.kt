@@ -85,7 +85,7 @@ class TaskEditViewModel @Inject constructor(
                 progressPercent = _formState.value.progressPercent.data,
                 targetDate = _formState.value.targetDate,
             )
-            _effect.emit(TaskEditEffect.NavigateBack)
+            _effect.emit(TaskEditEffect.UpdateSuccess(message = "更新成功"))
         }
     }
 

@@ -26,6 +26,13 @@ fun NavGraphBuilder.taskEditRoute(navController: NavHostController) {
             viewModel.effect.collect { effect ->
                 when (effect) {
                     TaskEditEffect.NavigateBack -> navController.popBackStack()
+
+                    is TaskEditEffect.UpdateSuccess -> {
+                        navController.previousBackStackEntry
+                            ?.savedStateHandle
+                            ?.set("result", effect.message)
+                        navController.popBackStack()
+                    }
                 }
             }
         }
