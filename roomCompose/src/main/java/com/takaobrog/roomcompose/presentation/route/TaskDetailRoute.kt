@@ -1,8 +1,11 @@
 package com.takaobrog.roomcompose.presentation.route
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -22,6 +25,17 @@ fun NavGraphBuilder.taskDetailRoute(navController: NavHostController) {
         val viewModel: TaskDetailViewModel = hiltViewModel()
         val state by viewModel.uiState.collectAsState()
         val showDialog by viewModel.showDialog.collectAsState()
+        val snackBarHostState = remember { SnackbarHostState() }
+        val backStackResult = navController.currentBackStackEntry
+            ?.savedStateHandle
+            ?.getStateFlow<String?>("result", null)
+        val result by backStackResult?.collectAsState() ?: remember { mutableStateOf(null) }
+
+        LaunchedEffect(result) {
+            result?.let {
+                snackBarHostState.showSnackbar(it)
+            }
+        }
 
         LaunchedEffect(Unit) {
             viewModel.effect.collect { effect ->
@@ -48,6 +62,7 @@ fun NavGraphBuilder.taskDetailRoute(navController: NavHostController) {
                 }
             },
             showDialog = showDialog,
+            snackBarHost = snackBarHostState
         )
     }
 }
