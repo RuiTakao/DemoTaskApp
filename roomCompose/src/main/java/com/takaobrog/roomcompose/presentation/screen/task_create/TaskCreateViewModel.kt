@@ -67,12 +67,12 @@ class TaskCreateViewModel @Inject constructor(
                 _effect.emit(TaskCreateEffect.NavigateBack)
             }, onFailure = { e ->
                 val message = if (e is CreateTaskException) {
-                    when (e.error) {
+                    when (val message = e.error) {
                         CreateTaskError.TitleEmpty -> "タイトルが入力されていません"
 
-                        CreateTaskError.TitleOver -> "タイトルは10文字以下で入力してください"
+                        is CreateTaskError.TitleOver -> "タイトルは${message.length}文字以下で入力してください"
 
-                        CreateTaskError.CommentOver -> "コメントは30文字以下で入力してください"
+                        is CreateTaskError.CommentOver -> "コメントは${message.length}文字以下で入力してください"
                     }
                 } else {
                     e.message
