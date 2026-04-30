@@ -13,7 +13,10 @@ class CreateTaskUseCase @Inject constructor(
         title: String,
         comment: String,
         targetDate: Long?
-    ) {
+    ): Result<Unit> {
+        inputValidation(title = title, comment = comment)?.let { message ->
+            return Result.failure(CreateTaskException(error = message))
+        }
         val createdAt = timeProvider.getNow()
         val request = CreateTaskRequest(
             title = title,
@@ -22,6 +25,28 @@ class CreateTaskUseCase @Inject constructor(
             targetDate = targetDate,
             createdAt = createdAt
         )
-        repository.create(request)
+        return repository.create(request)
+    }
+
+    private fun inputValidation(title: String, comment: String): CreateTaskError? {
+        if (title.isBlank()) {
+            return CreateTaskError.TitleEmpty
+        }
+        if (title.length > TITLE_OVER_LENGTH) {
+            return CreateTaskError.TitleOver(
+                length = TITLE_OVER_LENGTH
+            )
+        }
+        if (comment.length > COMMENT_OVER_LENGTH) {
+            return CreateTaskError.CommentOver(
+                length = COMMENT_OVER_LENGTH
+            )
+        }
+        return null
+    }
+
+    companion object {
+        private const val TITLE_OVER_LENGTH = 10
+        private const val COMMENT_OVER_LENGTH = 30
     }
 }

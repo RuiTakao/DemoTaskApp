@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.takaobrog.roomcompose.domain.use_case.GetTaskEditUseCase
+import com.takaobrog.roomcompose.domain.use_case.UpdateTaskEditException
 import com.takaobrog.roomcompose.domain.use_case.UpdateTaskEditUseCase
 import com.takaobrog.roomcompose.presentation.component.ProgressPercentStatus
 import com.takaobrog.roomcompose.presentation.screen.task_edit.ui_model.TaskEditEffect
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,61 +33,94 @@ class TaskEditViewModel @Inject constructor(
     private val _effect = MutableSharedFlow<TaskEditEffect>()
     val effect = _effect.asSharedFlow()
 
-    private val _uiState = MutableStateFlow<TaskEditUiState>(TaskEditUiState.Loading)
+    private val _uiState = MutableStateFlow(TaskEditUiState())
     val uiState = _uiState.asStateFlow()
-
-    private val _formState = MutableStateFlow(TaskEditFormState())
-    val formState = _formState.asStateFlow()
 
     init {
         viewModelScope.launch {
             getUseCase(uid = uid).fold(
                 onSuccess = {
                     val progressPercent = ProgressPercentStatus.formData(value = it.progressPercent)
-                    _formState.value = TaskEditFormState(
-                        title = it.title,
-                        comment = it.comment,
-                        progressPercent = progressPercent ?: ProgressPercentStatus.ZERO,
-                        targetDate = it.targetDate,
-                        formatTargetDate = formatTargetDate(targetDate = it.targetDate),
-                    )
+                    _uiState.update { state ->
+                        state.copy(
+                            loading = false,
+                            formState = TaskEditFormState(
+                                title = it.title,
+                                comment = it.comment,
+                                progressPercent = progressPercent ?: ProgressPercentStatus.ZERO,
+                                targetDate = it.targetDate,
+                                formatTargetDate = formatTargetDate(targetDate = it.targetDate),
+                            ),
+                        )
+                    }
                 },
                 onFailure = { e ->
                     Log.e(TAG, "getTaskEdit failed", e)
-                    _uiState.value = TaskEditUiState.Error(e.message)
+                    _uiState.update { state ->
+                        state.copy(loadError = e.message)
+                    }
                 }
             )
         }
     }
 
     fun inputTitle(title: String) {
-        _formState.value = _formState.value.copy(title = title)
+        _uiState.update { state ->
+            state.copy(formState = state.formState.copy(title = title))
+        }
     }
 
     fun inputComment(comment: String) {
-        _formState.value = _formState.value.copy(comment = comment)
+        _uiState.update { state ->
+            state.copy(formState = state.formState.copy(comment = comment))
+        }
     }
 
     fun inputProgressPercent(progressPercent: ProgressPercentStatus) {
-        _formState.value = _formState.value.copy(progressPercent = progressPercent)
+        _uiState.update { state ->
+            state.copy(formState = state.formState.copy(progressPercent = progressPercent))
+        }
     }
 
     fun inputTargetDate(targetDate: Long?) {
-        _formState.value = _formState.value.copy(targetDate = targetDate)
-        _formState.value =
-            _formState.value.copy(formatTargetDate = formatTargetDate(targetDate = targetDate))
+        _uiState.update { state ->
+            state.copy(
+                formState = state.formState.copy(
+                    targetDate = targetDate,
+                    formatTargetDate = formatTargetDate(targetDate = targetDate),
+                )
+            )
+        }
     }
 
     fun submit() {
         viewModelScope.launch {
             updateUseCase(
                 uid = uid,
-                title = _formState.value.title,
-                comment = _formState.value.comment,
-                progressPercent = _formState.value.progressPercent.data,
-                targetDate = _formState.value.targetDate,
+                title = _uiState.value.formState.title,
+                comment = _uiState.value.formState.comment,
+                progressPercent = _uiState.value.formState.progressPercent.data,
+                targetDate = _uiState.value.formState.targetDate,
+            ).fold(
+                onSuccess = {
+                    _effect.emit(TaskEditEffect.NavigateBack)
+                },
+                onFailure = { e ->
+                    _uiState.update { state ->
+                        if (e is UpdateTaskEditException) {
+                            state.copy(validError = e.error)
+                        } else {
+                            state.copy(updateError = e.message)
+                        }
+                    }
+                },
             )
-            _effect.emit(TaskEditEffect.NavigateBack)
+        }
+    }
+
+    fun onDismissValidError() {
+        _uiState.update {
+            it.copy(validError = null)
         }
     }
 

@@ -3,10 +3,14 @@ package com.takaobrog.roomcompose.presentation.route
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.takaobrog.roomcompose.R
+import com.takaobrog.roomcompose.domain.use_case.CreateTaskError
+import com.takaobrog.roomcompose.presentation.component.ErrorDialog
 import com.takaobrog.roomcompose.presentation.screen.task_create.TaskCreateScreen
 import com.takaobrog.roomcompose.presentation.screen.task_create.TaskCreateViewModel
 import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateEffect
@@ -15,7 +19,7 @@ import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCr
 fun NavGraphBuilder.taskCreateRoute(navController: NavHostController) {
     composable(route = ScreenRoute.TaskCreate.route) {
         val viewModel: TaskCreateViewModel = hiltViewModel()
-        val formState by viewModel.formState.collectAsState()
+        val uiState by viewModel.uiState.collectAsState()
 
         LaunchedEffect(Unit) {
             viewModel.effect.collect { effect ->
@@ -25,8 +29,27 @@ fun NavGraphBuilder.taskCreateRoute(navController: NavHostController) {
             }
         }
 
+        uiState.errorMessage?.let { createTaskError ->
+            ErrorDialog(
+                onDismiss = viewModel::onDismiss,
+                title = when (createTaskError) {
+                    CreateTaskError.TitleEmpty -> stringResource(id = R.string.task_create_form_title_valid_empty)
+
+                    is CreateTaskError.TitleOver -> stringResource(
+                        id = R.string.task_create_form_title_valid_over,
+                        createTaskError.length
+                    )
+
+                    is CreateTaskError.CommentOver -> stringResource(
+                        id = R.string.task_create_form_comment_valid_over,
+                        createTaskError.length
+                    )
+                }
+            )
+        }
+
         TaskCreateScreen(
-            formState = formState,
+            formState = uiState.formState,
             onEvent = { event ->
                 when (event) {
                     is TaskCreateEvent.OnSubmit -> viewModel.submit()
