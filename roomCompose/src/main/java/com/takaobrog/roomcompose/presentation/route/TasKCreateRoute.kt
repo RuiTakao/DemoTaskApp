@@ -3,10 +3,13 @@ package com.takaobrog.roomcompose.presentation.route
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.takaobrog.roomcompose.R
+import com.takaobrog.roomcompose.domain.use_case.CreateTaskError
 import com.takaobrog.roomcompose.presentation.component.ErrorDialog
 import com.takaobrog.roomcompose.presentation.screen.task_create.TaskCreateScreen
 import com.takaobrog.roomcompose.presentation.screen.task_create.TaskCreateViewModel
@@ -26,10 +29,22 @@ fun NavGraphBuilder.taskCreateRoute(navController: NavHostController) {
             }
         }
 
-        uiState.errorMessage?.let {
+        uiState.errorMessage?.let { createTaskError ->
             ErrorDialog(
                 onDismiss = viewModel::onDismiss,
-                title = it
+                title = when (createTaskError) {
+                    CreateTaskError.TitleEmpty -> stringResource(id = R.string.task_create_form_title_valid_empty)
+
+                    is CreateTaskError.TitleOver -> stringResource(
+                        id = R.string.task_create_form_title_valid_over,
+                        createTaskError.length
+                    )
+
+                    is CreateTaskError.CommentOver -> stringResource(
+                        id = R.string.task_create_form_comment_valid_over,
+                        createTaskError.length
+                    )
+                }
             )
         }
 

@@ -12,6 +12,9 @@
     <string name="task_create_form_target_date">期限</string>
     <string name="task_create_form_comment">コメント</string>
     <string name="task_create_form_submit">作成</string>
+    <string name="task_create_form_title_valid_empty">タイトルが入力されていません</string>
+    <string name="task_create_form_title_valid_over">タイトルは%1$s文字以下で入力してください</string>
+    <string name="task_create_form_comment_valid_over">コメントは%1$s文字以下で入力してください</string>
     <!-- タスク編集 -->
     <string name="task_edit_form_title">タスク名</string>
     <string name="task_edit_form_progress_percent">進捗</string>

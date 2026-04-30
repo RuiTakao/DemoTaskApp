@@ -2,7 +2,6 @@ package com.takaobrog.roomcompose.presentation.screen.task_create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.takaobrog.roomcompose.domain.use_case.CreateTaskError
 import com.takaobrog.roomcompose.domain.use_case.CreateTaskException
 import com.takaobrog.roomcompose.domain.use_case.CreateTaskUseCase
 import com.takaobrog.roomcompose.presentation.screen.task_create.ui_model.TaskCreateEffect
@@ -66,19 +65,12 @@ class TaskCreateViewModel @Inject constructor(
             ).fold(onSuccess = {
                 _effect.emit(TaskCreateEffect.NavigateBack)
             }, onFailure = { e ->
-                val message = if (e is CreateTaskException) {
-                    when (val message = e.error) {
-                        CreateTaskError.TitleEmpty -> "タイトルが入力されていません"
-
-                        is CreateTaskError.TitleOver -> "タイトルは${message.length}文字以下で入力してください"
-
-                        is CreateTaskError.CommentOver -> "コメントは${message.length}文字以下で入力してください"
+                if (e is CreateTaskException) {
+                    _uiState.update {
+                        it.copy(errorMessage = e.error)
                     }
                 } else {
                     e.message
-                }
-                _uiState.update {
-                    it.copy(errorMessage = message)
                 }
             })
         }
