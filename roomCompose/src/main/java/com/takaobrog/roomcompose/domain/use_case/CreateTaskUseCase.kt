@@ -13,7 +13,10 @@ class CreateTaskUseCase @Inject constructor(
         title: String,
         comment: String,
         targetDate: Long?
-    ) {
+    ): Result<Unit> {
+        if (title.isBlank()) {
+            return Result.failure(CreateTaskException(error = CreateTaskError.TitleEmpty))
+        }
         val createdAt = timeProvider.getNow()
         val request = CreateTaskRequest(
             title = title,
@@ -22,6 +25,6 @@ class CreateTaskUseCase @Inject constructor(
             targetDate = targetDate,
             createdAt = createdAt
         )
-        repository.create(request)
+        return repository.create(request)
     }
 }
