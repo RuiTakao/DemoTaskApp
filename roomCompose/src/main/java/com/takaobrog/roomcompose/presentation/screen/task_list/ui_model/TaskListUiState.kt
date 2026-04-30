@@ -1,6 +1,6 @@
 package com.takaobrog.roomcompose.presentation.screen.task_list.ui_model
 
-import com.takaobrog.roomcompose.domain.model.TaskListUiModel
+import com.takaobrog.roomcompose.domain.use_case.TaskListUiModel
 
 sealed class TaskListUiState {
     data object Loading : TaskListUiState()

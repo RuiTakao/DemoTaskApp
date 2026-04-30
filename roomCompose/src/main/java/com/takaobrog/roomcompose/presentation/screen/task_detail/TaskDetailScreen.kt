@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.takaobrog.roomcompose.R
-import com.takaobrog.roomcompose.domain.model.TaskDetailUiModel
+import com.takaobrog.roomcompose.domain.use_case.TaskDetailUiModel
 import com.takaobrog.roomcompose.presentation.component.DefaultTopAppBarBack
 import com.takaobrog.roomcompose.presentation.component.DeleteDialog
 import com.takaobrog.roomcompose.presentation.component.TaskDetailItem

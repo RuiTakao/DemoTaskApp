@@ -1,6 +1,5 @@
 package com.takaobrog.roomcompose.domain.use_case
 
-import com.takaobrog.roomcompose.domain.model.TaskListUiModel
 import com.takaobrog.roomcompose.domain.repository.TaskRepository
 import com.takaobrog.roomcompose.util.local_date.TimeProvider
 import kotlinx.coroutines.flow.Flow

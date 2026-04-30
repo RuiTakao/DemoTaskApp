@@ -1,9 +1,8 @@
-package com.takaobrog.roomcompose.domain.model
+package com.takaobrog.roomcompose.domain.use_case
 
-class TaskDetailUiModel(
+data class TaskListUiModel(
     val uid: Int,
     val title: String,
-    val comment: String,
     val progressPercent: Float,
     val targetDate: String?,
     val isTargetDateOver: Boolean,

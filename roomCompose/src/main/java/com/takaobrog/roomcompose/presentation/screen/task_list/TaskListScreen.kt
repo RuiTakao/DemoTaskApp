@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.takaobrog.roomcompose.presentation.component.FAButton
-import com.takaobrog.roomcompose.domain.model.TaskListUiModel
+import com.takaobrog.roomcompose.domain.use_case.TaskListUiModel
 import com.takaobrog.roomcompose.presentation.component.TaskListItem
 import com.takaobrog.roomcompose.presentation.screen.task_list.ui_model.TaskListEvent
 import com.takaobrog.roomcompose.presentation.screen.task_list.ui_model.TaskListUiState
