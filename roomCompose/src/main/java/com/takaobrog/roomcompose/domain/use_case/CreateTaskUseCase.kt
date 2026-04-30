@@ -17,6 +17,12 @@ class CreateTaskUseCase @Inject constructor(
         if (title.isBlank()) {
             return Result.failure(CreateTaskException(error = CreateTaskError.TitleEmpty))
         }
+        if (title.length > 10) {
+            return Result.failure(CreateTaskException(error = CreateTaskError.TitleOver))
+        }
+        if (comment.length > 30) {
+            return Result.failure(CreateTaskException(error = CreateTaskError.CommentOver))
+        }
         val createdAt = timeProvider.getNow()
         val request = CreateTaskRequest(
             title = title,

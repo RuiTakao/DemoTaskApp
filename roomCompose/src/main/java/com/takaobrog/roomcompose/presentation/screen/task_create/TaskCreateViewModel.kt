@@ -30,17 +30,31 @@ class TaskCreateViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     fun inputTitle(title: String) {
-        _uiState.value = _uiState.value.copy(formState = TaskCreateFormState(title = title))
+        _uiState.update { state ->
+            state.copy(
+                formState = state.formState.copy(title = title)
+            )
+        }
     }
 
     fun inputComment(comment: String) {
-        _uiState.value = _uiState.value.copy(formState = TaskCreateFormState(comment = comment))
+        _uiState.update { state ->
+            state.copy(
+                formState = state.formState.copy(comment = comment)
+            )
+        }
     }
 
     fun inputTargetDate(targetDate: Long?) {
         val formatTargetDate = targetDate?.let { timeProvider.formatterYmd(it) } ?: ""
-        _uiState.value = _uiState.value.copy(formState = TaskCreateFormState(targetDate = targetDate))
-        _uiState.value = _uiState.value.copy(formState = TaskCreateFormState(formatTargetDate = formatTargetDate))
+        _uiState.update { state ->
+            state.copy(
+                formState = state.formState.copy(
+                    targetDate = targetDate,
+                    formatTargetDate = formatTargetDate,
+                )
+            )
+        }
     }
 
     fun submit() {
@@ -49,22 +63,24 @@ class TaskCreateViewModel @Inject constructor(
                 title = _uiState.value.formState.title,
                 comment = _uiState.value.formState.comment,
                 targetDate = _uiState.value.formState.targetDate,
-            ).fold(
-                onSuccess = {
-                    _effect.emit(TaskCreateEffect.NavigateBack)
-                },
-                onFailure = { e ->
-                    if (e is CreateTaskException) {
-                        when (e.error) {
-                            CreateTaskError.TitleEmpty -> {
-                                _uiState.update {
-                                    it.copy(errorMessage = "タイトルが入力されていません")
-                                }
-                            }
-                        }
+            ).fold(onSuccess = {
+                _effect.emit(TaskCreateEffect.NavigateBack)
+            }, onFailure = { e ->
+                val message = if (e is CreateTaskException) {
+                    when (e.error) {
+                        CreateTaskError.TitleEmpty -> "タイトルが入力されていません"
+
+                        CreateTaskError.TitleOver -> "タイトルは10文字以下で入力してください"
+
+                        CreateTaskError.CommentOver -> "コメントは30文字以下で入力してください"
                     }
+                } else {
+                    e.message
                 }
-            )
+                _uiState.update {
+                    it.copy(errorMessage = message)
+                }
+            })
         }
     }
 
