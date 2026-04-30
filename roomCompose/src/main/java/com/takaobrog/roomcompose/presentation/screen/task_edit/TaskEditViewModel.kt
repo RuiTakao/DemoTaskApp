@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -59,21 +60,30 @@ class TaskEditViewModel @Inject constructor(
     }
 
     fun inputTitle(title: String) {
-        _formState.value = _formState.value.copy(title = title)
+        _formState.update { state ->
+            state.copy(title = title)
+        }
     }
 
     fun inputComment(comment: String) {
-        _formState.value = _formState.value.copy(comment = comment)
+        _formState.update { state ->
+            state.copy(comment = comment)
+        }
     }
 
     fun inputProgressPercent(progressPercent: ProgressPercentStatus) {
-        _formState.value = _formState.value.copy(progressPercent = progressPercent)
+        _formState.update { state ->
+            state.copy(progressPercent = progressPercent)
+        }
     }
 
     fun inputTargetDate(targetDate: Long?) {
-        _formState.value = _formState.value.copy(targetDate = targetDate)
-        _formState.value =
-            _formState.value.copy(formatTargetDate = formatTargetDate(targetDate = targetDate))
+        _formState.update { state ->
+            state.copy(
+                targetDate = targetDate,
+                formatTargetDate = formatTargetDate(targetDate = targetDate),
+            )
+        }
     }
 
     fun submit() {
