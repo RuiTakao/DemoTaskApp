@@ -22,6 +22,9 @@
     <string name="task_edit_form_comment">コメント</string>
     <string name="task_edit_form_submit_ok">OK</string>
     <string name="task_edit_form_submit_cancel">キャンセル</string>
+    <string name="task_edit_form_title_valid_empty">タイトルが入力されていません</string>
+    <string name="task_edit_form_title_valid_over">タイトルは%1$s文字以下で入力してください</string>
+    <string name="task_edit_form_comment_valid_over">コメントは%1$s文字以下で入力してください</string>
     <!-- タスク詳細 -->
     <string name="task_detail_delete_confirm_message">削除しますか？</string>
     <!-- TopAppBar -->
